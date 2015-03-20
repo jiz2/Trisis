@@ -130,10 +130,6 @@ window.onload = function init() {
     gl.enable(gl.CULL_FACE);
     gl.cullFace(gl.BACK);
 	
-	var cstackRed = [];
-	for (var i = 0; i < 108; i++)
-		cstackRed.push(vec4(1.0, 0.0, 0.0, 1.0));
-	
     //
     //  Load shaders and initialize attribute buffers
     //
