@@ -11,7 +11,7 @@ var spinY = 0;
 var origX;
 var origY;
 
-var zDist = 7.0;
+var zDist = 10.0;
 var xPos = 3.5;
 var yPos = 10.0;
 var zPos = 3.5;

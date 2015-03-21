@@ -107,7 +107,7 @@ var texCube = {
 		gl.bufferData( gl.ARRAY_BUFFER, flatten(this.tex), gl.STATIC_DRAW );
 		
 		// texture image
-		this.image = document.getElementById("texTest");
+		this.image = document.getElementById("texWhite");
 	},
 
 	square: function (a, b, c, d) {

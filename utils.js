@@ -81,7 +81,7 @@ function loadColor(colorObject, newColor) {
 	} else {
 		var newColorBuffer = gl.createBuffer();
 		var colors = [];
-		for (var i in colorObject.colors)
+		for (var i in colorObject.points)
 			colors.push(newColor);
 		gl.bindBuffer( gl.ARRAY_BUFFER, newColorBuffer );
 		gl.bufferData( gl.ARRAY_BUFFER, flatten(colors), gl.STATIC_DRAW );

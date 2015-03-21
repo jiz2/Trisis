@@ -27,6 +27,7 @@ window.onload = function init() {
 	// ==================
 	colorCube.init();
 	texCube.init();
+	container.init();
 	
     //
     //  Load shaders and initialize attribute buffers
