@@ -11,11 +11,6 @@ var spinY = 0;
 var origX;
 var origY;
 
-var zDist = 10.0;
-var xPos = 3.5;
-var yPos = 10.0;
-var zPos = 3.5;
-
 var program;
 var vPosition;
 var vColor;
@@ -25,7 +20,7 @@ var proLoc;
 var mvLoc;
 
 var g_keys = [];
-var g_gridOn = false;
+
 var KEY_LEFT = 37;
 var KEY_UP = 38;
 var KEY_RIGHT = 39;

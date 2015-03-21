@@ -6,17 +6,8 @@ function render() {
 
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	
-	// Handle POV Movement
-	handlePOV();
-	
 	var mvstack = [];
-
-	// Point of View
-	var mv = lookAt( vec3(xPos, yPos, zPos+zDist), vec3(xPos, yPos, zPos), vec3(0.0, 1.0, 0.0) );
-    mv = mult( mv, translate( xPos, yPos, zPos ) );
-	mv = mult( mv, rotate( parseFloat(spinX), [1, 0, 0] ) );
-    mv = mult( mv, rotate( parseFloat(spinY), [0, 1, 0] ) );
-	mv = mult( mv, translate( -xPos, -yPos, -zPos ) );
+	var mv = pov.getMV();
 	
 	mvstack.push(mv);
 	mv = mult( mv, translate( 3.5, 9.5, 3.5 ) );
