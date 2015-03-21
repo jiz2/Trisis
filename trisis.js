@@ -22,18 +22,22 @@ window.onload = function init() {
     gl.enable(gl.CULL_FACE);
     gl.cullFace(gl.BACK);
 	
+	// ==================
+	// Initialize objects
+	// ==================
+	colorCube.init();
+	texCube.init();
+	
     //
     //  Load shaders and initialize attribute buffers
     //
-    var program = initShaders( gl, "vertex-shader", "fragment-shader" );
+    program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
 
     vPosition = gl.getAttribLocation( program, "vPosition" );
 	gl.enableVertexAttribArray( vPosition );
     vColor = gl.getAttribLocation( program, "vColor" );
-	gl.enableVertexAttribArray( vColor );
-	//vTexCoord = gl.getAttribLocation( program, "vTexCoord" );
-    //gl.enableVertexAttribArray( vTexCoord );
+	vTexCoord = gl.getAttribLocation( program, "vTexCoord" );
 	
     proLoc = gl.getUniformLocation( program, "projection" );
     mvLoc = gl.getUniformLocation( program, "modelview" );
@@ -100,10 +104,5 @@ window.onload = function init() {
 		g_keys[e.keyCode] = false;
     });
 	
-	// ==================
-	// Initialize objects
-	// ==================
-	cube.init();
-
     render();
 }

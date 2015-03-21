@@ -16,6 +16,7 @@ var xPos = 3.5;
 var yPos = 10.0;
 var zPos = 3.5;
 
+var program;
 var vPosition;
 var vColor;
 var vTexCoord;

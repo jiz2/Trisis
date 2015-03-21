@@ -19,10 +19,14 @@ function render() {
 	mv = mult( mv, translate( -xPos, -yPos, -zPos ) );
 	
 	mvstack.push(mv);
+	drawTexObject(texCube,mv);
+	mv = mvstack.pop();
+	
+	mvstack.push(mv);
 	mv = mult( mv, translate( 3.5, 0.0, 3.5 ) );
 	mv = mult( mv, scale4( 6.0, 0.001, 6.0 ) );
-	loadColor(cube, vec4( 0.8, 0.8, 0.8, 1.0 ));
-	drawObject(cube, mv);
+	loadColor(colorCube, vec4( 0.8, 0.8, 0.8, 1.0 ));
+	drawObject(colorCube, mv);
 	mv = mvstack.pop();
 	
 	// Reset indices
