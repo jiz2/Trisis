@@ -88,8 +88,8 @@ window.onload = function init() {
 	
     window.addEventListener("mousewheel", function(e){
 		if (movement) {
-			if( e.wheelDelta > 0.0 ) zDist -= 0.2;
-			else zDist += 0.2;
+			if( e.wheelDelta > 0.0 ) pov.zDist -= 0.5;
+			else pov.zDist += 0.5;
 			e.preventDefault();
 		}
     });  

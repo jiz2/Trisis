@@ -4,16 +4,16 @@
 
 var pov = {
 	
-	zDist: 10.0,
+	zDist: 15.0,
 	xPos: 3.5,
-	yPos: 12.0,
+	yPos: 10.0,
 	zPos: 3.5,
 
 	getMV: function () {
 		
 		// Zoom limit
-		if ( this.zDist < 10 ) this.zDist = 10.0;
-		if ( this.zDist > 15 ) this.zDist = 15.0;
+		if ( this.zDist < 15 ) this.zDist = 15.0;
+		if ( this.zDist > 20 ) this.zDist = 20.0;
 		
 		// Elevation limit
 		if ( spinX < -45 ) spinX = -45;
