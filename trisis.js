@@ -16,10 +16,10 @@ var spinY = 0;
 var origX;
 var origY;
 
-var zDist = 0.1;
-var xPos = 0.0;
-var yPos = 0.0;
-var zPos = 5.0;
+var zDist = 7.0;
+var xPos = 3.5;
+var yPos = 10.0;
+var zPos = 3.5;
 
 var vPosition;
 var vColor;
@@ -135,10 +135,6 @@ window.onload = function init() {
     //
     var program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
-	
-	var cstackBuffer = gl.createBuffer();
-	gl.bindBuffer( gl.ARRAY_BUFFER, cstackBuffer );
-	gl.bufferData( gl.ARRAY_BUFFER, flatten(cstackRed), gl.STATIC_DRAW );
 
     vPosition = gl.getAttribLocation( program, "vPosition" );
 	gl.enableVertexAttribArray( vPosition );
@@ -213,7 +209,6 @@ window.onload = function init() {
 	// ==================
 	// Initialize objects
 	// ==================
-	cstack.push(cstackBuffer);
 	cube.init();
 
     render();
@@ -286,92 +281,6 @@ var cube = {
 	}
 }
 
-// ===============
-// Frame and Floor
-// ===============
-var frameNfloor = {
-	height: 5.0,
-	width: 3.0,
-	dColor: vec4(.55, .45, 0.35, 1.0),
-	fColor: vec4(0.85, 0.85, 0.85, 1.0),
-
-	render: function(mv, mvstack) {
-		
-		// Floor
-		// =====
-		mvstack.push(mv);
-		mv = mult( mv, translate( 0.0, -this.height/2, 0.0 ) );
-		mv = mult( mv, scale4( 20.0, 0.001, 20.0 ) );
-		loadColor(cube, this.fColor);
-		drawObject(cube, mv);
-		mv = mvstack.pop();
-	}
-}
-
-// ======
-// Person
-// ======
-function renderPerson(mv, mvstack) {
-	mvstack.push(mv);
-	loadColor(cube, vec4(0.0, 0.0, 0.0, 0.2));
-	var rotLimbs = 0;
-	mv = mult( mv, translate( xPos, yPos-1.1, zPos ) );
-	mv = mult( mv, rotate( parseFloat(-spinY), [0, 1, 0] ) );
-	mv = mult( mv, scale4( 1.5, 1.5, 1.5 ) );
-	var overlapOffset = 0.001;
-	var armsMod = rotLimbs/90*0.2*0.5 + overlapOffset;
-	var legsMod = rotLimbs/90*0.22*0.5 + overlapOffset;
-	
-    // draw head
-	mvstack.push(mv);
-	mv = mult( mv, translate( 0.0, 0.7, 0.0 ) );
-    mv = mult( mv, scale4( 0.3, 0.3, 0.3 ) );
-    drawObject(cube, mv);
-	mv = mvstack.pop();
-	
-    // draw body
-	mvstack.push(mv);
-    mv = mult( mv, translate( 0.0, 0.2, 0.0 ) );
-    mv = mult( mv, scale4( 0.5, 0.7, 0.3 ) );
-    drawObject(cube, mv);
-	mv = mvstack.pop();
-	
-    // draw arms
-	mvstack.push(mv);
-    mv = mult( mv, translate( -0.25+armsMod, 0.2+0.5*0.7-armsMod*2, 0.0 ) );
-	mv = mult( mv, rotate( -rotLimbs, [ 0, 0, 1 ]) );
-    mv = mult( mv, scale4( 0.2, 0.6, 0.2 ) );
-	mv = mult( mv, translate( -0.5, -0.5, 0.0 ) );
-    drawObject(cube, mv);
-	mv = mvstack.pop();
-	
-	mvstack.push(mv);
-	mv = mult( mv, translate( 0.25-armsMod, 0.2+0.5*0.7-armsMod*2, 0.0 ) );
-	mv = mult( mv, rotate( rotLimbs, [ 0, 0, 1 ]) );
-    mv = mult( mv, scale4( 0.2, 0.6, 0.2 ) );
-	mv = mult( mv, translate( 0.5, -0.5, 0.0 ) );
-    drawObject(cube, mv);
-	mv = mvstack.pop();
-	
-    // draw legs
-	mvstack.push(mv);
-	mv = mult( mv, translate( -0.12, 0.2-0.5*0.7+legsMod, 0.0 ) );
-	mv = mult( mv, rotate( -rotLimbs, [ 0, 0, 1 ]) );
-    mv = mult( mv, scale4( 0.22, 0.8, 0.22 ) );
-	mv = mult( mv, translate( 0.0, -0.5, 0.0 ) );
-    drawObject(cube, mv);
-	mv = mvstack.pop();
-	
-	mvstack.push(mv);
-	mv = mult( mv, translate( 0.12, 0.2-0.5*0.7+legsMod, 0.0 ) );
-	mv = mult( mv, rotate( rotLimbs, [ 0, 0, 1 ]) );
-    mv = mult( mv, scale4( 0.22, 0.8, 0.22 ) );
-	mv = mult( mv, translate( 0.0, -0.5, 0.0 ) );
-    drawObject(cube, mv);
-	mv = mvstack.pop();
-	mv = mvstack.pop();
-}
-
 // =======
 // Handles
 // =======
@@ -407,8 +316,8 @@ function handlePOV() {
 	if ( zPos > 10 ) zPos = 10.0;
 	
 	// Zoom limit
-	if ( zDist < 0.1 ) zDist = 0.1;
-	if ( zDist > 5 ) zDist = 5.0;
+	if ( zDist < 5 ) zDist = 5.0;
+	if ( zDist > 10 ) zDist = 10.0;
 	
 	// Elevation limit
 	if ( spinX < -70 ) spinX = -70;
@@ -434,17 +343,13 @@ function render() {
     mv = mult( mv, rotate( parseFloat(spinY), [0, 1, 0] ) );
 	mv = mult( mv, translate( -xPos, -yPos, -zPos ) );
 	
-	// Person
-	renderPerson(mv, mvstack);
-
-	// Frame and Floor
-	frameNfloor.render(mv, mvstack);
-	var frame = frameNfloor.getHnW();
-	var height = frame.height;
-	var width = frame.width;
-	var barThickness = 0.05;
-	var barWidth = width*2/3;
-
+	mvstack.push(mv);
+	mv = mult( mv, translate( 3.5, 0.0, 3.5 ) );
+	mv = mult( mv, scale4( 6.0, 0.001, 6.0 ) );
+	loadColor(cube, vec4( 0.8, 0.8, 0.8, 1.0 ));
+	drawObject(cube, mv);
+	mv = mvstack.pop();
+	
 	// Reset indices
 	cstackIndex = 1;
 
