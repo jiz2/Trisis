@@ -72,7 +72,7 @@ var container = {
 		}
 	},
 	
-	render: function (mv) {
+	render: function (mv, mvstack) {
 		gl.enableVertexAttribArray( vTexCoord );
 		
 		gl.bindBuffer( gl.ARRAY_BUFFER, this.vBuffer );
@@ -80,6 +80,9 @@ var container = {
 		gl.bindBuffer( gl.ARRAY_BUFFER, this.tBuffer );
 		gl.vertexAttribPointer( vTexCoord, 2, gl.FLOAT, false, 0, 0 );
 		
+		mvstack.push(mv);
+		mv = mult( mv, translate( 3.5, 9.5, 3.5 ) );
+		mv = mult( mv, scale4( 3.0, 10.0, 3.0 ) );
 		gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
 		gl.uniform1i( gl.getUniformLocation( program, "isTexture"), 1 );
 		
@@ -96,6 +99,7 @@ var container = {
 		gl.drawArrays( gl.TRIANGLES, 24, 6 );
 		// y down floor
 		gl.drawArrays( gl.TRIANGLES, 30, 6 );
+		mv = mvstack.pop();
 		
 		gl.disableVertexAttribArray( vTexCoord );
 	}

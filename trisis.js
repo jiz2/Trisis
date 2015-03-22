@@ -35,6 +35,7 @@ window.onload = function init() {
 	colorCube.init();
 	texCube.init();
 	container.init();
+	signaller.init();
 	
     //
     //  Load shaders and initialize attribute buffers
@@ -112,5 +113,8 @@ window.onload = function init() {
 		g_keys[e.keyCode] = false;
     });
 	
-    render();
+	// ==============
+	// Start Mainloop
+	// ==============
+    main.init();
 }

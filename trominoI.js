@@ -5,7 +5,7 @@
 function TrominoI () {
 	this.cX = 3;
 	this.cZ = 3;
-	this.cY = 19;
+	this.cY = 18;
 	
 	// ---- | ---- | ---- //
 	//  A   |  C   |  B   //
@@ -40,18 +40,21 @@ function TrominoI () {
 }
 TrominoI.prototype.render = function (mv, mvstack) {
 	// Render A
+	signaller.drawAt(mv, mvstack, this.aX, this.aY, this.aZ);
 	mvstack.push(mv);
 	mv = mult( mv, translate( this.aX, this.aY, this.aZ ) );
 	drawTexObject(texCube,mv);
 	mv = mvstack.pop();
 	
 	// Render B
+	signaller.drawAt(mv, mvstack, this.bX, this.bY, this.bZ);
 	mvstack.push(mv);
 	mv = mult( mv, translate( this.bX, this.bY, this.bZ ) );
 	drawTexObject(texCube,mv);
 	mv = mvstack.pop();
 
 	// Render C
+	signaller.drawAt(mv, mvstack, this.cX, this.cY, this.cZ);
 	mvstack.push(mv);
 	mv = mult( mv, translate( this.cX, this.cY, this.cZ ) );
 	drawTexObject(texCube,mv);

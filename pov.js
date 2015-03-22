@@ -17,7 +17,7 @@ var pov = {
 		
 		// Elevation limit
 		if ( spinX < -45 ) spinX = -45;
-		if ( spinX > 70 ) spinX = 70;
+		if ( spinX > 90 ) spinX = 90;
 		
 		// Modelview
 		var mv = lookAt(
