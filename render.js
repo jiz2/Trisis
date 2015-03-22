@@ -12,7 +12,7 @@ function render() {
 	mvstack.push(mv);
 	mv = mult( mv, translate( 3.5, 9.5, 3.5 ) );
 	mv = mult( mv, scale4( 3.0, 10.0, 3.0 ) );
-	container.render(mv);
+	container.render(mv, mvstack);
 	mv = mvstack.pop();
 	
 	mvstack.push(mv);

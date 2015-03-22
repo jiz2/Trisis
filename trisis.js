@@ -15,12 +15,19 @@ window.onload = function init() {
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
     gl.viewport( 0, 0, canvas.width, canvas.height );
-    gl.clearColor( 0.5, 0.8, 1.0, 1.0 );
+    gl.clearColor( 0.0, 0.0, 0.0, 1.0 );
     
     gl.enable(gl.DEPTH_TEST);
     
     gl.enable(gl.CULL_FACE);
     gl.cullFace(gl.BACK);
+	
+	gl.enable( gl.BLEND );
+//    gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA );
+//    gl.blendFunc( gl.SRC_ALPHA, gl.DST_ALPHA );
+//    gl.blendFunc( gl.ONE, gl.DST_ALPHA );
+    gl.blendFunc( gl.SRC_ALPHA, gl.ONE );
+//    gl.blendFunc( gl.ONE, gl.ONE_MINUS_SRC_ALPHA );
 	
 	// ==================
 	// Initialize objects
