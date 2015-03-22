@@ -5,12 +5,12 @@
 var main = {
 	
 	init: function () {
-		setInterval(this.dropTromino, 500);
+		setInterval(this.dropTromino, 100);
 		
 		this.render();
 	},
 	
-	activeTromino: new TrominoI(),
+	activeTromino: Math.random()<0.5? new TrominoI():new TrominoC(),
 	
 	dropTromino: function() {
 		if (main.activeTromino.aY > 0 && 
@@ -21,7 +21,7 @@ var main = {
 			main.activeTromino.bY--;
 			main.activeTromino.cY--;
 		} else {
-			main.activeTromino = new TrominoI();
+			main.activeTromino = Math.random()<0.5? new TrominoI():new TrominoC();
 		}
 	},
 	
