@@ -20,7 +20,7 @@ var proLoc;
 var mvLoc;
 
 var g_keys = [];
-
+var trominoI;
 var KEY_LEFT = 37;
 var KEY_UP = 38;
 var KEY_RIGHT = 39;
