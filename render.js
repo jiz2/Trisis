@@ -15,8 +15,8 @@ function render() {
 	container.render(mv, mvstack);
 	mv = mvstack.pop();
 	
-	trominoI = new TrominoI();
-	trominoI.render(mv, mvstack);
+	trominoC = new TrominoC();
+	trominoC.render(mv, mvstack);
 	
 	
 	// Reset indices
