@@ -104,7 +104,43 @@ var main = {
 			console.log(this.activeTromino.a);
 			console.log(this.activeTromino.b);
 			console.log(this.activeTromino.c);
-			console.log();
+			console.log("\n");
+			
+			var relPosA = subtract(this.activeTromino.a, this.activeTromino.c);
+			var relPosB = subtract(this.activeTromino.b, this.activeTromino.c);
+			
+			console.log(relPosA);
+			console.log(relPosB);
+			
+			var matA = mat4(
+				relPosA[0], 0, 0, 0,
+				relPosA[1], 0, 0, 0,
+				relPosA[2], 0, 0, 0,
+				0, 0, 0, 1
+			);
+			var rotMatA = mult( rotate( 90, [1, 0, 0] ), matA );
+			var rotPosA = vec3( rotMatA[0][0], rotMatA[1][0], rotMatA[2][0] );
+			var newA = add(rotPosA, this.activeTromino.c);
+			
+			var matB = mat4(
+				relPosB[0], 0, 0, 0,
+				relPosB[1], 0, 0, 0,
+				relPosB[2], 0, 0, 0,
+				0, 0, 0, 1
+			);
+			var rotMatB = mult( rotate( 90, [1, 0, 0] ), matB );
+			var rotPosB = vec3( rotMatB[0][0], rotMatB[1][0], rotMatB[2][0] );
+			var newB = add(rotPosB, this.activeTromino.c);
+			
+			console.log("\n");
+			console.log(matA);
+			console.log(rotate( 90, [1, 0, 0] ));
+			console.log(rotMatA);
+			console.log(rotPosA);
+			console.log(newA);
+			
+			this.activeTromino.a = newA;
+			this.activeTromino.b = newB;
 		}
 		if (eatKey("Z".charCodeAt(0))) { // x-axis, negative
 		
