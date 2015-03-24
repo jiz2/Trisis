@@ -2,14 +2,10 @@
 // Tromino C
 // =========
 
-var halfPi = Math.PI/2;
-
 function TrominoC() {
 	this.cX=3;
 	this.cY=18;
 	this.cZ=3;
-	this.theta1=90;
-	this.theta2=270;
 	
 
 	switch (Math.floor(Math.random()*12)){
@@ -20,8 +16,6 @@ function TrominoC() {
 			this.bX = this.cX+1;
 			this.bY = this.cY;
 			this.bZ = this.cZ;
-			this.theta1=90;
-			this.theta2=270;
 			break;
 		case(1): // Looks like an an L, pointing in negative direction on Z-axis
 			this.aX = this.cX;
@@ -114,32 +108,6 @@ function TrominoC() {
 	}
 }
 
-/*RotationTypes: 0: x-axis, positive
-				 1: y-axis, positive
-				 2: z-axis, positive
-				 3: x-axis, negative
-				 4: y-axis, negative
-				 5: z-axis, negative 
-*/
-
-TrominoC.prototype.rotate = function (rotationType) {
-
-	switch(rotationType) {
-		case(0): //rotate on x-axis, positive direction
-		{
-			this.theta1=this.theta1+halfPi;
-			this.aY=this.cY+Math.sin(this.theta1);
-			this.theta2=this.theta2+halfPi;
-			this.bZ=this.cZ+math.cos(this.theta2);
-			if (this.theta1===360) {this.theta1=0;}
-			if (this.theta2===360) {this.theta2=0;}
-			break;
-		}
-		case(1): rotate on y-axis, positive direction
-		{}
-	}
-
-}
 TrominoC.prototype.render = function (mv, mvstack) {
 	//Render A
 	signaller.drawAt(mv, mvstack, this.aX, this.aY, this.aZ);

@@ -25,6 +25,28 @@ var main = {
 		}
 	},
 	
+	rotateTromino: function() {
+
+		if (eatKey("A")) { // x-axis, positive
+			
+		}
+		if (eatKey("Z")) { // x-axis, negative
+		
+		}
+		if (eatKey("S")) { // y-axis, positive
+		
+		}
+		if (eatKey("X")) { // y-axis, negative
+		
+		}
+		if (eatKey("D")) { // z-axis, positive
+		
+		}
+		if (eatKey("C")) { // z-axis, negative 
+		
+		}
+	},
+	
 	render: function () {
 
 		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -34,6 +56,7 @@ var main = {
 		
 		container.render(mv, mvstack);
 		
+		main.rotateTromino();
 		main.activeTromino.render(mv, mvstack);
 		
 		// Reset indices
