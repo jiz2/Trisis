@@ -2,12 +2,12 @@
 // Utilities
 // =========
 
-// Usage: eatKey(key)
-// Pre:   key is the ASCII char on the keyboard
+// Usage: eatKey(keyCode)
+// Pre:   keyCode is the ASCII char code on the keyboard
 // Post:  single-signal true of a button press
-function eatKey(key) {
-    var isDown = g_keys[key.charCodeAt(0)];
-    g_keys[key.charCodeAt(0)] = false;
+function eatKey(keyCode) {
+    var isDown = g_keys[keyCode];
+    g_keys[keyCode] = false;
     return isDown;
 }
 
