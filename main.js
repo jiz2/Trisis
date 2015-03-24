@@ -5,23 +5,23 @@
 var main = {
 	
 	init: function () {
-		//setInterval(this.dropTromino, 100);
+		setInterval(this.dropTromino, 500);
 		
 		this.render();
 	},
 	
-	activeTromino: new TrominoI(),
+	activeTromino: Math.random()<0.5? new TrominoI():new TrominoC(),
 	
 	dropTromino: function() {
-		if (main.activeTromino.aY > 0 && 
-			main.activeTromino.bY > 0 && 
-			main.activeTromino.cY > 0
+		if (main.activeTromino.a[1] > 0 && 
+			main.activeTromino.b[1] > 0 && 
+			main.activeTromino.c[1] > 0
 		) {
-			main.activeTromino.aY--;
-			main.activeTromino.bY--;
-			main.activeTromino.cY--;
+			main.activeTromino.a[1]--;
+			main.activeTromino.b[1]--;
+			main.activeTromino.c[1]--;
 		} else {
-			main.activeTromino = new TrominoI();
+			main.activeTromino = Math.random()<0.5? new TrominoI():new TrominoC();
 		}
 	},
 	
@@ -99,63 +99,53 @@ var main = {
 	},
 	
 	rotateTromino: function () {
-
+		
+		var relPosA = subtract(this.activeTromino.a, this.activeTromino.c);
+		var relPosB = subtract(this.activeTromino.b, this.activeTromino.c);
+		
 		if (eatKey("A".charCodeAt(0))) { // x-axis, positive
-			console.log(this.activeTromino.a);
-			console.log(this.activeTromino.b);
-			console.log(this.activeTromino.c);
-			console.log("\n");
-			
-			var relPosA = subtract(this.activeTromino.a, this.activeTromino.c);
-			var relPosB = subtract(this.activeTromino.b, this.activeTromino.c);
-			
-			console.log(relPosA);
-			console.log(relPosB);
-			
-			var matA = mat4(
-				relPosA[0], 0, 0, 0,
-				relPosA[1], 0, 0, 0,
-				relPosA[2], 0, 0, 0,
-				0, 0, 0, 1
-			);
-			var rotMatA = mult( rotate( 90, [1, 0, 0] ), matA );
-			var rotPosA = vec3( rotMatA[0][0], rotMatA[1][0], rotMatA[2][0] );
-			var newA = add(rotPosA, this.activeTromino.c);
-			
-			var matB = mat4(
-				relPosB[0], 0, 0, 0,
-				relPosB[1], 0, 0, 0,
-				relPosB[2], 0, 0, 0,
-				0, 0, 0, 1
-			);
-			var rotMatB = mult( rotate( 90, [1, 0, 0] ), matB );
-			var rotPosB = vec3( rotMatB[0][0], rotMatB[1][0], rotMatB[2][0] );
-			var newB = add(rotPosB, this.activeTromino.c);
-			
-			console.log("\n");
-			console.log(matA);
-			console.log(rotate( 90, [1, 0, 0] ));
-			console.log(rotMatA);
-			console.log(rotPosA);
-			console.log(newA);
-			
-			this.activeTromino.a = newA;
-			this.activeTromino.b = newB;
+			relPosA = rotateBy(relPosA, 90, [1,0,0]);
+			relPosB = rotateBy(relPosB, 90, [1,0,0]);
 		}
 		if (eatKey("Z".charCodeAt(0))) { // x-axis, negative
-		
+			relPosA = rotateBy(relPosA, -90, [1,0,0]);
+			relPosB = rotateBy(relPosB, -90, [1,0,0]);
 		}
 		if (eatKey("S".charCodeAt(0))) { // y-axis, positive
-		
+			relPosA = rotateBy(relPosA, 90, [0,1,0]);
+			relPosB = rotateBy(relPosB, 90, [0,1,0]);
 		}
 		if (eatKey("X".charCodeAt(0))) { // y-axis, negative
-		
+			relPosA = rotateBy(relPosA, -90, [0,1,0]);
+			relPosB = rotateBy(relPosB, -90, [0,1,0]);
 		}
 		if (eatKey("D".charCodeAt(0))) { // z-axis, positive
-		
+			relPosA = rotateBy(relPosA, 90, [0,0,1]);
+			relPosB = rotateBy(relPosB, 90, [0,0,1]);
 		}
 		if (eatKey("C".charCodeAt(0))) { // z-axis, negative 
+			relPosA = rotateBy(relPosA, -90, [0,0,1]);
+			relPosB = rotateBy(relPosB, -90, [0,0,1]);
+		}
 		
+		var newA = add(relPosA, this.activeTromino.c);
+		var newB = add(relPosB, this.activeTromino.c);
+		
+		// Rotate if inside game field		
+		var safeA = true;
+		var safeB = true;
+		
+		if (newA[0] < 1 || newA[0] > 6) safeA = false;
+		if (newA[1] < 1 || newA[1] >19) safeA = false;
+		if (newA[2] < 1 || newA[2] > 6) safeA = false;
+		
+		if (newB[0] < 1 || newB[0] > 6) safeB = false;
+		if (newB[1] < 1 || newB[1] >19) safeB = false;
+		if (newB[2] < 1 || newB[2] > 6) safeB = false;
+		
+		if (safeA && safeB) {
+			this.activeTromino.a = newA;
+			this.activeTromino.b = newB;
 		}
 	},
 	
@@ -178,4 +168,3 @@ var main = {
 		requestAnimFrame( main.render );
 	}
 }
-

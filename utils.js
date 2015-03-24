@@ -11,6 +11,21 @@ function eatKey(keyCode) {
     return isDown;
 }
 
+// Usage: rotateBy(relativePos, degAngle, axis)
+// Pre:   relativePos is the position, degAngle is the angle
+//        axis is the rotation axis
+// Post:  rotates relativePos degAngle degrees by axis
+function rotateBy(relativePos, degAngle, axis) {
+	var matPos = mat4(
+		relativePos[0], 0, 0, 0,
+		relativePos[1], 0, 0, 0,
+		relativePos[2], 0, 0, 0,
+		0, 0, 0, 1
+	);
+	var rotMat = mult( rotate( degAngle, axis ), matPos );
+	return vec3( rotMat[0][0], rotMat[1][0], rotMat[2][0] );
+}
+
 //----------------------------------------------------------------------------
 // Define the transformation scale here (two scale functions in MV.js)
 function scale4( x, y, z ) {
