@@ -179,7 +179,7 @@ var spatialManager ={
 				}
 			}
 		}
-	}
+	},
 
 	//Used when a player fills up an entire level
 	deleteLevel: function(y){
