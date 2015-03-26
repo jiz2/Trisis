@@ -1,8 +1,8 @@
 var spatialManager ={
 	
-	 var maxHeight=0;
+	 maxHeight: 0,
 
-	 var board= [
+	 board: [
 	 
 	 [[false, false, false, false, false, false],
 	  [false, false, false, false, false, false],
@@ -137,9 +137,9 @@ var spatialManager ={
 	  [false, false, false, true, false, false],
 	  [false, false, false, false, false, false]
 	 ]   
-	 ];
+	 ],
 
-	renderRedBoxes = function (mv, mvstack){
+	renderRedBoxes: function (mv, mvstack){
 		for (i=0; i<=maxHeight; i++)
 		{
 			for(j=0; j<6; j++)
@@ -157,16 +157,16 @@ var spatialManager ={
 		}
 	},
 
-	registerRedBox = function(x,y,z){
+	registerRedBox: function(x,y,z){
 		board[y][x][z]=true;
 		if (y>maxHeight){maxHeight=y;}
 	},
 
-	checkForCollision = function(x,y,z){
+	checkForCollision: function(x,y,z){
 		return board[y][x][z];
 	},
 
-	checkForCompletion = function(){
+	checkForCompletion: function(){
 		for (i=maxHeight; i>0; i--)
 		{
 			var levelCount=0;
@@ -182,7 +182,7 @@ var spatialManager ={
 	}
 
 	//Used when a player fills up an entire level
-	deleteLevel = function(y){
+	deleteLevel: function(y){
 
 		//clear all boxes from current level
 		for (i=0; i<6;i++)
