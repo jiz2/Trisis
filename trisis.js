@@ -37,6 +37,7 @@ window.onload = function init() {
 	container.init();
 	signaller.init();
 	
+	
     //
     //  Load shaders and initialize attribute buffers
     //

@@ -157,6 +157,7 @@ var main = {
 		var mv = pov.getMV();
 		
 		container.render(mv, mvstack);
+		spatialManager.renderRedBoxes(mv, mvstack);
 		
 		main.moveTromino();
 		main.rotateTromino();

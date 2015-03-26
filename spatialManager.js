@@ -140,13 +140,13 @@ var spatialManager ={
 	 ],
 
 	renderRedBoxes: function (mv, mvstack){
-		for (i=0; i<=maxHeight; i++)
+		for (i=0; i<=this.maxHeight; i++)
 		{
 			for(j=0; j<6; j++)
 			{
 				for (k=0; k<6; k++)
 				{
-					if (board[i][j][k]===true)
+					if (this.board[i][j][k]===true)
 						signaller.drawAt(mv, mvstack, j, i, k);
 						mvstack.push(mv);
 						mv = mult(mv, translate(j, i, k));
