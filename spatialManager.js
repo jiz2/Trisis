@@ -1,167 +1,30 @@
-var spatialManager ={
-	
-	 maxHeight: 0,
+var spatialManager = {
 
-	 board: [
-	 
-	 [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ],
-	 [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ], 
-     [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ],
-	 [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ], 
-     [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ],
-	 [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ], 
-     [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ],
-	 [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ], 
-     [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ],
-	 [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ], 
-     [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ],
-	 [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ], 
-     [[false, false, false, false, false, false],
-	  [false, false, false, true, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ],
-	 [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ], 
-     [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ],
-	 [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ], 
-     [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ],
-	 [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false]
-	 ], 
-     [[false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, false, false, false],
-	  [false, false, false, true, false, false],
-	  [false, false, false, false, false, false]
-	 ]   
-	 ],
-
-	renderRedBoxes: function (mv, mvstack){
-		for (i=0; i<=this.maxHeight; i++)
-		{
-			for(j=0; j<6; j++)
-			{
-				for (k=0; k<6; k++)
-				{
-					if (this.board[i][j][k]===true)
-						signaller.drawAt(mv, mvstack, j, i, k);
-						mvstack.push(mv);
-						mv = mult(mv, translate(j, i, k));
-						drawTexObject(texCube,mv);
-						mv=mvstack.pop();
-				}
+	init: function () {
+		this.board = []
+		for (var x = 1; x <= 6; x++) {
+			this.board[x] = [];
+			for (var y = 1; y <= 20; y++) {
+				this.board[x][y] = [];
+				for (var z = 1; z <= 6; z++)
+					this.board[x][y][z] = true;
 			}
 		}
 	},
 
-	registerRedBox: function(x,y,z){
-		board[y][x][z]=true;
-		if (y>maxHeight){maxHeight=y;}
+	canDrop: function(tromino) {
+		// false means can drop, so if all is false, return true
+		var dropable = false;
+		dropable = dropable || this.board[tromino.a[1] - 1];
+		dropable = dropable || this.board[tromino.b[1] - 1];
+		dropable = dropable || this.board[tromino.c[1] - 1];
+		return dropable;
 	},
-
+	
+	registerInactive: function(pos){
+		this.board[y][x][z] = false;
+	},
+	
 	checkForCollision: function(x,y,z){
 		return board[y][x][z];
 	},

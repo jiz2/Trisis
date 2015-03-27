@@ -5,12 +5,19 @@
 var main = {
 	
 	init: function () {
+		spatialManager.init();
+		
+		this.createTromino();
 		setInterval(this.dropTromino, 500);
 		
 		this.render();
 	},
+
+	inactives: [],
 	
-	activeTromino: Math.random()<0.5? new TrominoI():new TrominoC(),
+	createTromino: function() {
+		this.activeTromino = Math.random()<0.5? new TrominoI():new TrominoC()
+	},
 	
 	dropTromino: function() {
 		if (main.activeTromino.a[1] > 0 && 
@@ -21,7 +28,7 @@ var main = {
 			main.activeTromino.b[1]--;
 			main.activeTromino.c[1]--;
 		} else {
-			main.activeTromino = Math.random()<0.5? new TrominoI():new TrominoC();
+			main.createTromino();
 		}
 	},
 	
@@ -149,6 +156,24 @@ var main = {
 		}
 	},
 	
+	renderInactive: function (mv, mvstack) {
+		for (i=0; i<=this.maxHeight; i++)
+		{
+			for(j=0; j<6; j++)
+			{
+				for (k=0; k<6; k++)
+				{
+					if (this.board[i][j][k]===true)
+						signaller.drawAt(mv, mvstack, j, i, k);
+						mvstack.push(mv);
+						mv = mult(mv, translate(j, i, k));
+						drawTexObject(texCube,mv);
+						mv=mvstack.pop();
+				}
+			}
+		}
+	},
+	
 	render: function () {
 
 		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -156,12 +181,16 @@ var main = {
 		var mvstack = [];
 		var mv = pov.getMV();
 		
+		// Render boundary
 		container.render(mv, mvstack);
-		spatialManager.renderRedBoxes(mv, mvstack);
 		
+		// Render active Tromino
 		main.moveTromino();
 		main.rotateTromino();
 		main.activeTromino.render(mv, mvstack);
+		
+		// Render inactive Trominos
+		main.renderInactive(mv, mvstack);
 		
 		// Reset indices
 		cstackIndex = 1;

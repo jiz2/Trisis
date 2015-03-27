@@ -54,14 +54,6 @@ function TrominoC() {
 		case(11): //laying sideways, box A on negative x-axis
 			this.a = vec3( this.c[0] - 1, this.c[1], this.c[2] );
 			this.b = vec3( this.c[0], this.c[1], this.c[2] + 1 );
-
-	this.cX=3;
-	this.cY=18;
-	this.cZ=3;
-	this.orientation=0;
-	this.rotationQueue=[];
-	this.rotationIndex=0;
-	
 	}
 }
 
