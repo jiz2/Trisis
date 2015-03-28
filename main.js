@@ -37,7 +37,7 @@ var main = {
 			main.inactives.push(main.active.b);
 			main.inactives.push(main.active.c);
 			
-			// Add active Tromino into game field
+			// Add inactive Tromino into game field
 			spatialManager.register(main.active);
 			
 			// Make new Tromino
@@ -188,6 +188,10 @@ var main = {
 		if (newB[0] < 1 || newB[0] > 6) safeB = false;
 		if (newB[1] < 1 || newB[1] >19) safeB = false;
 		if (newB[2] < 1 || newB[2] > 6) safeB = false;
+		
+		// Rotate if no collision
+		safeA = safeA && spatialManager.checkCollision(newA[0], newA[1], newA[2]);
+		safeB = safeB && spatialManager.checkCollision(newB[0], newB[1], newB[2]);		
 		
 		if (safeA && safeB) {
 			this.active.a = newA;
