@@ -7,12 +7,15 @@ var main = {
 	init: function () {
 		spatialManager.init();
 		
+		//if (maxHeight<20)
+		//{
 		this.createTromino();
 		
 		// Add active Tromino into game field
 		spatialManager.register(main.active);
 		
-		setInterval(this.dropTromino, 1000);
+		setInterval(this.dropTromino, 500);
+		//}
 		
 		this.render();
 	},
@@ -39,15 +42,20 @@ var main = {
 			
 			// Add inactive Tromino into game field
 			spatialManager.register(main.active);
+
+			spatialManager.checkForCompletion(main.active.a[1],main.active.b[1],main.active.c[1]);
 			
 			// Make new Tromino
 			main.createTromino();
+
+			var thisBoxHeight = Math.max(main.active.a[1],main.active.b[1],main.active.c[1])
+			if (thisBoxHeight>maxHeight) maxHeight= thisBoxHeight;
 		}
 		
 		// Add active Tromino into game field
 		spatialManager.register(main.active);
 	},
-	
+
 	moveTromino: function () {
 		// Remove active Tromino from game field
 		spatialManager.unregister(main.active);
@@ -215,6 +223,7 @@ var main = {
 	render: function () {
 
 		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+		document.getElementById("score").innerHTML = score;
 		
 		var mvstack = [];
 		var mv = pov.getMV();

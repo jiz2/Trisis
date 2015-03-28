@@ -31,3 +31,6 @@ var cstack = [];
 var cstackIndex = 1;
 
 var score=0;
+
+var maxHeight=0;
+

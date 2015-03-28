@@ -40,21 +40,24 @@ var spatialManager = {
 	checkCollision: function (x,y,z){
 		return this.board[x][y][z];
 	},
+	//This function called when a tromino is settled. Check to see if the level has been completely filled.
+	checkForCompletion: function (y1,y2,y3) {
+		var highest = Math.max(y1,y2,y3);
 
-	checkForCompletion: function () {
-		for (i=maxHeight; i>0; i--)
+		for (i=highest; i>highest-3; i--)
 		{
 			var levelCount=0;
 			for (j=0;j<6;j++)
 			{
 				for (k=0; k<6; k++)
 				{
-					if (board[i][j][k]===true) {levelCount++};
+					if (this.board[i][j][k]===false) {levelCount++};
 					if (levelCount===36) {deleteLevel(i)};
 				}
 			}
 		}
 	},
+
 
 	//Used when a player fills up an entire level
 	deleteLevel: function (y) {
@@ -64,27 +67,27 @@ var spatialManager = {
 		{
 			for (j=0;j<6;j++)
 			{
-				board[y][i][j]=false;
+				this.board[y][i][j]=true;
 			}
 		}
 		//shift all higher boxes one level lower
-		for (m=y+1; m<=maxHeight;m++)
+		for (m=y+1; m<=19;m++)
 		{
 			for (n=0;n<6;n++)
 			{
 				for (p=0;p<6;p++)
 				{
-					if (board[m][n][p]===true)
+					if (this.board[m][n][p]===false)
 					{
-						board[m-1][n][p]=true;
-						board[m][n][p]=false;
+						this.board[m-1][n][p]=false;
+						this.board[m][n][p]=true;
 					}
 				}
 			}
 		}
-		maxHeight--;
 		score++;
 		renderRedBoxes();
-		checkForCompletion();
+		//check for any cascading completions
+		checkForCompletion(y,y,y);
 	}
 }
