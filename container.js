@@ -81,7 +81,7 @@ var container = {
 		gl.vertexAttribPointer( vTexCoord, 2, gl.FLOAT, false, 0, 0 );
 		
 		mvstack.push(mv);
-		mv = mult( mv, translate( 3.5, 9.5, 3.5 ) );
+		mv = mult( mv, translate( 3.5, 10.5, 3.5 ) );
 		mv = mult( mv, scale4( 3.0, 10.0, 3.0 ) );
 		gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
 		gl.uniform1i( gl.getUniformLocation( program, "isTexture"), 1 );

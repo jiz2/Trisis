@@ -100,7 +100,7 @@ var signaller = {
 		
 		// y negative
 		mvstack.push(mv);
-		mv = mult( mv, translate( x, 0.001, z ) );
+		mv = mult( mv, translate( x, 1.001, z ) );
 		gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
 		gl.drawArrays( gl.TRIANGLES, 24, 6 );
 		mv = mvstack.pop();

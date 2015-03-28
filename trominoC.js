@@ -4,7 +4,7 @@
 
 function TrominoC() {
 
-	this.c = vec3( 3.0, 18.0, 3.0 );
+	this.c = vec3( 3.0, 19.0, 3.0 );
 
 	switch (Math.floor(Math.random()*12)){
 		case(0): //looks like an L

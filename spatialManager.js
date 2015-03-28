@@ -12,24 +12,36 @@ var spatialManager = {
 		}
 	},
 
-	canDrop: function(tromino) {
-		// false means can drop, so if all is false, return true
-		var dropable = false;
-		dropable = dropable || this.board[tromino.a[1] - 1];
-		dropable = dropable || this.board[tromino.b[1] - 1];
-		dropable = dropable || this.board[tromino.c[1] - 1];
+	canDrop: function (tromino) {
+		// true means can drop
+		var dropable = true;
+		
+		if (tromino.a[1] - 1 > 0 && tromino.b[1] - 1 > 0 && tromino.c[1] - 1 > 0) {
+			dropable = dropable && this.board[tromino.a[0]][tromino.a[1] - 1][tromino.a[2]];
+			dropable = dropable && this.board[tromino.b[0]][tromino.b[1] - 1][tromino.b[2]];
+			dropable = dropable && this.board[tromino.c[0]][tromino.c[1] - 1][tromino.c[2]];
+		} else dropable = false;
+		
 		return dropable;
 	},
 	
-	registerInactive: function(pos){
-		this.board[y][x][z] = false;
+	register: function (tromino) {
+		this.board[tromino.a[0]][tromino.a[1]][tromino.a[2]] = false;
+		this.board[tromino.b[0]][tromino.b[1]][tromino.b[2]] = false;
+		this.board[tromino.c[0]][tromino.c[1]][tromino.c[2]] = false;
 	},
 	
-	checkForCollision: function(x,y,z){
-		return board[y][x][z];
+	unregister: function (tromino) {
+		this.board[tromino.a[0]][tromino.a[1]][tromino.a[2]] = true;
+		this.board[tromino.b[0]][tromino.b[1]][tromino.b[2]] = true;
+		this.board[tromino.c[0]][tromino.c[1]][tromino.c[2]] = true;
 	},
 
-	checkForCompletion: function(){
+	checkCollision: function (x,y,z){
+		return this.board[x][y][z];
+	},
+
+	checkForCompletion: function () {
 		for (i=maxHeight; i>0; i--)
 		{
 			var levelCount=0;
@@ -45,7 +57,7 @@ var spatialManager = {
 	},
 
 	//Used when a player fills up an entire level
-	deleteLevel: function(y){
+	deleteLevel: function (y) {
 
 		//clear all boxes from current level
 		for (i=0; i<6;i++)

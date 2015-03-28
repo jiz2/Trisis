@@ -8,7 +8,11 @@ var main = {
 		spatialManager.init();
 		
 		this.createTromino();
-		setInterval(this.dropTromino, 500);
+		
+		// Add active Tromino into game field
+		spatialManager.register(main.active);
+		
+		setInterval(this.dropTromino, 1000);
 		
 		this.render();
 	},
@@ -16,70 +20,100 @@ var main = {
 	inactives: [],
 	
 	createTromino: function() {
-		this.activeTromino = Math.random()<0.5? new TrominoI():new TrominoC()
+		this.active = Math.random()<0.5? new TrominoI():new TrominoC();
 	},
 	
 	dropTromino: function() {
-		if (main.activeTromino.a[1] > 0 && 
-			main.activeTromino.b[1] > 0 && 
-			main.activeTromino.c[1] > 0
-		) {
-			main.activeTromino.a[1]--;
-			main.activeTromino.b[1]--;
-			main.activeTromino.c[1]--;
+		// Remove active Tromino from game field
+		spatialManager.unregister(main.active);
+		
+		if (spatialManager.canDrop(main.active)) {
+			main.active.a[1]--;
+			main.active.b[1]--;
+			main.active.c[1]--;
 		} else {
+			// Add inactive Tromino
+			main.inactives.push(main.active.a);
+			main.inactives.push(main.active.b);
+			main.inactives.push(main.active.c);
+			
+			// Add active Tromino into game field
+			spatialManager.register(main.active);
+			
+			// Make new Tromino
 			main.createTromino();
 		}
+		
+		// Add active Tromino into game field
+		spatialManager.register(main.active);
 	},
 	
 	moveTromino: function () {
-
+		// Remove active Tromino from game field
+		spatialManager.unregister(main.active);
+		
 		if (eatKey(KEY_LEFT)) {
 			var safe = true;
-			if (this.activeTromino.a[0]-1 < 1) safe = false;
-			if (this.activeTromino.b[0]-1 < 1) safe = false;
-			if (this.activeTromino.c[0]-1 < 1) safe = false;
+			if (this.active.a[0]-1 < 1) safe = false;
+			if (this.active.b[0]-1 < 1) safe = false;
+			if (this.active.c[0]-1 < 1) safe = false;
+			
+			safe = safe && spatialManager.checkCollision(this.active.a[0]-1, this.active.a[1], this.active.a[2]);
+			safe = safe && spatialManager.checkCollision(this.active.b[0]-1, this.active.b[1], this.active.b[2]);
+			safe = safe && spatialManager.checkCollision(this.active.c[0]-1, this.active.c[1], this.active.c[2]);
 			
 			if (safe) {
-				this.activeTromino.a[0]--; 
-				this.activeTromino.b[0]--;
-				this.activeTromino.c[0]--;
+				this.active.a[0]--; 
+				this.active.b[0]--;
+				this.active.c[0]--;
 			}
 		}
 		if (eatKey(KEY_UP)) {
 			var safe = true;
-			if (this.activeTromino.a[2]-1 < 1) safe = false;
-			if (this.activeTromino.b[2]-1 < 1) safe = false;
-			if (this.activeTromino.c[2]-1 < 1) safe = false;
+			if (this.active.a[2]-1 < 1) safe = false;
+			if (this.active.b[2]-1 < 1) safe = false;
+			if (this.active.c[2]-1 < 1) safe = false;
+			
+			safe = safe && spatialManager.checkCollision(this.active.a[0], this.active.a[1], this.active.a[2]-1);
+			safe = safe && spatialManager.checkCollision(this.active.b[0], this.active.b[1], this.active.b[2]-1);
+			safe = safe && spatialManager.checkCollision(this.active.c[0], this.active.c[1], this.active.c[2]-1);
 			
 			if (safe) {
-				this.activeTromino.a[2]--; 
-				this.activeTromino.b[2]--;
-				this.activeTromino.c[2]--;
+				this.active.a[2]--; 
+				this.active.b[2]--;
+				this.active.c[2]--;
 			}
 		}
 		if (eatKey(KEY_RIGHT)) {
 			var safe = true;
-			if (this.activeTromino.a[0]+1 > 6) safe = false;
-			if (this.activeTromino.b[0]+1 > 6) safe = false;
-			if (this.activeTromino.c[0]+1 > 6) safe = false;
+			if (this.active.a[0]+1 > 6) safe = false;
+			if (this.active.b[0]+1 > 6) safe = false;
+			if (this.active.c[0]+1 > 6) safe = false;
+			
+			safe = safe && spatialManager.checkCollision(this.active.a[0]+1, this.active.a[1], this.active.a[2]);
+			safe = safe && spatialManager.checkCollision(this.active.b[0]+1, this.active.b[1], this.active.b[2]);
+			safe = safe && spatialManager.checkCollision(this.active.c[0]+1, this.active.c[1], this.active.c[2]);
 			
 			if (safe) {
-				this.activeTromino.a[0]++; 
-				this.activeTromino.b[0]++;
-				this.activeTromino.c[0]++;
+				this.active.a[0]++; 
+				this.active.b[0]++;
+				this.active.c[0]++;
 			}
 		}
 		if (eatKey(KEY_DOWN)) {
 			var safe = true;
-			if (this.activeTromino.a[2]+1 > 6) safe = false;
-			if (this.activeTromino.b[2]+1 > 6) safe = false;
-			if (this.activeTromino.c[2]+1 > 6) safe = false;
+			if (this.active.a[2]+1 > 6) safe = false;
+			if (this.active.b[2]+1 > 6) safe = false;
+			if (this.active.c[2]+1 > 6) safe = false;
+			
+			safe = safe && spatialManager.checkCollision(this.active.a[0], this.active.a[1], this.active.a[2]+1);
+			safe = safe && spatialManager.checkCollision(this.active.b[0], this.active.b[1], this.active.b[2]+1);
+			safe = safe && spatialManager.checkCollision(this.active.c[0], this.active.c[1], this.active.c[2]+1);
 			
 			if (safe) {
-				this.activeTromino.a[2]++; 
-				this.activeTromino.b[2]++;
-				this.activeTromino.c[2]++;
+				this.active.a[2]++; 
+				this.active.b[2]++;
+				this.active.c[2]++;
 			}
 		}
 		
@@ -103,12 +137,17 @@ var main = {
 			zPos -= 0.1*Math.sin(-spinY*Math.PI/180);
 		}
 		*/
+		
+		// Add active Tromino into game field
+		spatialManager.register(main.active);
 	},
 	
 	rotateTromino: function () {
+		// Remove active Tromino from game field
+		spatialManager.unregister(main.active);
 		
-		var relPosA = subtract(this.activeTromino.a, this.activeTromino.c);
-		var relPosB = subtract(this.activeTromino.b, this.activeTromino.c);
+		var relPosA = subtract(this.active.a, this.active.c);
+		var relPosB = subtract(this.active.b, this.active.c);
 		
 		if (eatKey("A".charCodeAt(0))) { // x-axis, positive
 			relPosA = rotateBy(relPosA, 90, [1,0,0]);
@@ -135,8 +174,8 @@ var main = {
 			relPosB = rotateBy(relPosB, -90, [0,0,1]);
 		}
 		
-		var newA = add(relPosA, this.activeTromino.c);
-		var newB = add(relPosB, this.activeTromino.c);
+		var newA = add(relPosA, this.active.c);
+		var newB = add(relPosB, this.active.c);
 		
 		// Rotate if inside game field		
 		var safeA = true;
@@ -151,26 +190,21 @@ var main = {
 		if (newB[2] < 1 || newB[2] > 6) safeB = false;
 		
 		if (safeA && safeB) {
-			this.activeTromino.a = newA;
-			this.activeTromino.b = newB;
+			this.active.a = newA;
+			this.active.b = newB;
 		}
+		
+		// Add active Tromino into game field
+		spatialManager.register(main.active);
 	},
 	
-	renderInactive: function (mv, mvstack) {
-		for (i=0; i<=this.maxHeight; i++)
-		{
-			for(j=0; j<6; j++)
-			{
-				for (k=0; k<6; k++)
-				{
-					if (this.board[i][j][k]===true)
-						signaller.drawAt(mv, mvstack, j, i, k);
-						mvstack.push(mv);
-						mv = mult(mv, translate(j, i, k));
-						drawTexObject(texCube,mv);
-						mv=mvstack.pop();
-				}
-			}
+	renderInactives: function (mv, mvstack) {
+		for (var i in this.inactives) {
+			var pos = this.inactives[i];
+			mvstack.push(mv);
+			mv = mult( mv, translate( pos[0], pos[1], pos[2] ) );
+			drawTexObject(texCube, mv);
+			mv = mvstack.pop();
 		}
 	},
 	
@@ -187,10 +221,10 @@ var main = {
 		// Render active Tromino
 		main.moveTromino();
 		main.rotateTromino();
-		main.activeTromino.render(mv, mvstack);
+		main.active.render(mv, mvstack);
 		
 		// Render inactive Trominos
-		main.renderInactive(mv, mvstack);
+		main.renderInactives(mv, mvstack);
 		
 		// Reset indices
 		cstackIndex = 1;
