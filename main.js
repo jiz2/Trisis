@@ -43,6 +43,7 @@ var main = {
 			// Add inactive Tromino into game field
 			spatialManager.register(main.active);
 
+			// Check for completion of a level
 			spatialManager.checkForCompletion(main.active.a[1],main.active.b[1],main.active.c[1]);
 			
 			// Make new Tromino

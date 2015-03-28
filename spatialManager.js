@@ -44,20 +44,16 @@ var spatialManager = {
 	checkForCompletion: function (y1,y2,y3) {
 		var highest = Math.max(y1,y2,y3);
 
-		for (i=highest; i>highest-3; i--)
-		{
-			var levelCount=0;
-			for (j=0;j<6;j++)
-			{
-				for (k=0; k<6; k++)
-				{
-					if (this.board[i][j][k]===false) {levelCount++};
+		for (var i = highest; i > highest-3; i--) {
+			var levelCount = 0;
+			for (var j = 1; j <= 6; j++) {
+				for (var k = 1; k <= 6; k++) {
+					if (this.board[j][i][k]===false) {levelCount++};
 					if (levelCount===36) {deleteLevel(i)};
 				}
 			}
 		}
 	},
-
 
 	//Used when a player fills up an entire level
 	deleteLevel: function (y) {
