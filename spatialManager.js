@@ -45,18 +45,12 @@ var spatialManager = {
 		var highest = Math.max(y1,y2,y3);
 		var lowest = Math.max(0,highest-3);
 
-		for (var i = highest; i > lowest; i--) {
+		for (var y = highest; y > lowest; y--) {
 			var levelCount = 0;
-			for (var j = 1; j <= 6; j++) {
-				for (var k = 1; k <= 6; k++) {
-
-					if (this.board[j][i][k]===false) {levelCount++};
-					if (levelCount===36) 
-						{
-							main.ding.play();
-							this.deleteLevel(i);
-							
-						};
+			for (var x = 1; x <= 6; x++) {
+				for (var z = 1; z <= 6; z++) {
+					if (this.board[x][y][z] === false) levelCount++;
+					if (levelCount === 36) this.deleteLevel(y);
 				}
 			}
 		}
@@ -64,7 +58,7 @@ var spatialManager = {
 
 	//Used when a player fills up an entire level
 	deleteLevel: function (y) {
-
+		main.ding.play();
 		// Clear all boxes on deleted level from Spatial Board
 		for (var x = 1; x < 6; x++) {
 			for (var z = 1; z < 6; z++) {
@@ -98,7 +92,6 @@ var spatialManager = {
 		}
 		
 		score++;
-		main.render();
 		//check for any cascading completions
 		this.checkForCompletion(y,y,y);
 	}

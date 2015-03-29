@@ -13,17 +13,13 @@ var main = {
 
 	init: function () {
 		spatialManager.init();
-
 		
-		//if (maxHeight<20)
-		//{
 		this.createTromino();
 		
 		// Add active Tromino into game field
 		spatialManager.register(main.active);
 		
 		setInterval(this.dropTromino, 500);
-		//}
 		
 		this.render();
 	},
@@ -43,8 +39,8 @@ var main = {
 			main.active.b[1]--;
 			main.active.c[1]--;
 		} else {
-
 			main.clank.play();
+			
 			// Add inactive Tromino
 			main.inactives.push(main.active.a);
 			main.inactives.push(main.active.b);
@@ -58,9 +54,6 @@ var main = {
 			
 			// Make new Tromino
 			main.createTromino();
-
-			var thisBoxHeight = Math.max(main.active.a[1],main.active.b[1],main.active.c[1])
-			if (thisBoxHeight>maxHeight) maxHeight= thisBoxHeight;
 		}
 		
 		// Add active Tromino into game field
@@ -69,52 +62,36 @@ var main = {
 		main.render();
 	},
 	
-	throwTromino: function () {
-		// Remove active Tromino from game field
-		spatialManager.unregister(main.active);
-
-		if (eatKey(" ".charCodeAt(0))) {
-			while (spatialManager.canDrop(main.active)) {
-				main.active.a[1]--;
-				main.active.b[1]--;
-				main.active.c[1]--;
-		}}
-		
-		// Add active Tromino into game field
-		spatialManager.register(main.active);
-	},
-
 	moveTromino: function () {
 		// Remove active Tromino from game field
 		spatialManager.unregister(main.active);
 		
-		var newA = this.active.a;
-		var newB = this.active.b;
-		var newC = this.active.c;
+		var x = 0;
+		var z = 0;
 
 		if (eatKey(KEY_LEFT)) {
-			newA = add(newA, vec3( -1, 0, 0 ));
-			newB = add(newB, vec3( -1, 0, 0 ));
-			newC = add(newC, vec3( -1, 0, 0 ));
+			x = -Math.round(Math.cos(Math.round(-spinY/90)*Math.PI/2));
+			z =  Math.round(Math.sin(Math.round(-spinY/90)*Math.PI/2));
 		}
 		if (eatKey(KEY_UP)) {
-			newA = add(newA, vec3( 0, 0, -1 ));
-			newB = add(newB, vec3( 0, 0, -1 ));
-			newC = add(newC, vec3( 0, 0, -1 ));
+			x = -Math.round(Math.sin(Math.round(-spinY/90)*Math.PI/2));
+			z = -Math.round(Math.cos(Math.round(-spinY/90)*Math.PI/2));
 		}
 		if (eatKey(KEY_RIGHT)) {
-			newA = add(newA, vec3( 1, 0, 0 ));
-			newB = add(newB, vec3( 1, 0, 0 ));
-			newC = add(newC, vec3( 1, 0, 0 ));
+			x =  Math.round(Math.cos(Math.round(-spinY/90)*Math.PI/2));
+			z = -Math.round(Math.sin(Math.round(-spinY/90)*Math.PI/2));
 		}
 		if (eatKey(KEY_DOWN)) {
-			newA = add(newA, vec3( 0, 0, 1 ));
-			newB = add(newB, vec3( 0, 0, 1 ));
-			newC = add(newC, vec3( 0, 0, 1 ));
+			x = Math.round(Math.sin(Math.round(-spinY/90)*Math.PI/2));
+			z = Math.round(Math.cos(Math.round(-spinY/90)*Math.PI/2));
 		}
 		
 		// If a change occurred
-		if (newA[0] !== this.active.a[0] || newA[2] !== this.active.a[2]) {
+		if (x !== 0 || z !== 0) {
+			var newA = add(this.active.a, vec3( x, 0, z ));
+			var newB = add(this.active.b, vec3( x, 0, z ));
+			var newC = add(this.active.c, vec3( x, 0, z ));
+			
 			// Check collision
 			var safe = true;
 			
@@ -137,26 +114,17 @@ var main = {
 				this.render();
 			}
 		}
-		/* 	Code used in Mobile for positive movement at any angle
-			that needs to be changed if want to implement here
 		
-		if ( g_keys['W'.charCodeAt(0)] ) {
-			xPos -= 0.1*Math.sin(-spinY*Math.PI/180);
-			zPos -= 0.1*Math.cos(-spinY*Math.PI/180);
+		// Free fall Tromino
+		if (eatKey(" ".charCodeAt(0))) {
+			while (spatialManager.canDrop(main.active)) {
+				main.active.a[1]--;
+				main.active.b[1]--;
+				main.active.c[1]--;
+			}
+			// Let dropTromino handle the rest
+			return this.dropTromino();
 		}
-		if ( g_keys['S'.charCodeAt(0)] ) {
-			xPos += 0.1*Math.sin(-spinY*Math.PI/180);
-			zPos += 0.1*Math.cos(-spinY*Math.PI/180);
-		}
-		if ( g_keys['A'.charCodeAt(0)] ) {
-			xPos -= 0.1*Math.cos(-spinY*Math.PI/180);
-			zPos += 0.1*Math.sin(-spinY*Math.PI/180);
-		}
-		if ( g_keys['D'.charCodeAt(0)] ) {
-			xPos += 0.1*Math.cos(-spinY*Math.PI/180);
-			zPos -= 0.1*Math.sin(-spinY*Math.PI/180);
-		}
-		*/
 		
 		// Add active Tromino into game field
 		spatialManager.register(main.active);

@@ -46,7 +46,7 @@ var signaller = {
 		gl.bufferData( gl.ARRAY_BUFFER, flatten(this.tex), gl.STATIC_DRAW );
 		
 		// texture image
-		this.image = document.getElementById("texGray");
+		this.image = document.getElementById("texWhite");
 	},
 
 	square: function (a, b, c, d) {
