@@ -68,7 +68,7 @@ var main = {
 				main.active.a[1]--;
 				main.active.b[1]--;
 				main.active.c[1]--;
-		}
+		}}
 		
 		// Add active Tromino into game field
 		spatialManager.register(main.active);

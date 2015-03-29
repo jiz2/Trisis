@@ -79,14 +79,14 @@ var spatialManager = {
 		//shift all higher boxes one level lower in the Spatial Board
 		for (m=y+1; m<=19;m++)
 		{
-			for (n=0;n<6;n++)
+			for (n=1;n<6;n++)
 			{
-				for (p=0;p<6;p++)
+				for (p=1;p<6;p++)
 				{
-					if (this.board[m][n][p]===false)
+					if (this.board[n][m][p]===false)
 					{
-						this.board[m-1][n][p]=false;
-						this.board[m][n][p]=true;
+						this.board[n][m-1][p]=false;
+						this.board[n][m][p]=true;
 					}
 				}
 			}
