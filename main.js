@@ -218,7 +218,7 @@ var main = {
 			var pos = this.inactives[i];
 			mvstack.push(mv);
 			mv = mult( mv, translate( pos[0], pos[1], pos[2] ) );
-			drawTexObject(texCube, mv);
+			drawTexObject(texCube, mv, true);
 			mv = mvstack.pop();
 		}
 	},

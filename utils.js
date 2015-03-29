@@ -141,11 +141,12 @@ function loadTexObject(texObject) {
 // Pre:   texObject is an object that has its own vertex and texture buffer
 //        mv is the modelview matrix
 // Post:  loads texObject and its texture and draws it
-function drawTexObject(texObject, mv) {
+function drawTexObject(texObject, mv, inactive) {
 	gl.enableVertexAttribArray( vTexCoord );
 	gl.uniform1i( gl.getUniformLocation( program, "isTexture"), 1 );
 	loadTexObject(texObject);
-	configureTexture(texObject.image);
+	if (inactive) configureTexture(texObject.imageRed);
+	else configureTexture(texObject.image);
 	gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
 	gl.drawArrays( gl.TRIANGLES, 0, texObject.numVertices);
 	gl.disableVertexAttribArray( vTexCoord );
