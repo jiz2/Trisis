@@ -58,6 +58,21 @@ var main = {
 		
 		main.render();
 	},
+	
+	throwTromino: function () {
+		// Remove active Tromino from game field
+		spatialManager.unregister(main.active);
+
+		if (eatKey(" ".charCodeAt(0))) {
+			while (spatialManager.canDrop(main.active)) {
+				main.active.a[1]--;
+				main.active.b[1]--;
+				main.active.c[1]--;
+		}
+		
+		// Add active Tromino into game field
+		spatialManager.register(main.active);
+	},
 
 	moveTromino: function () {
 		// Remove active Tromino from game field
