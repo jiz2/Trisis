@@ -14,7 +14,7 @@ var main = {
 		// Add active Tromino into game field
 		spatialManager.register(main.active);
 		
-		setInterval(this.dropTromino, 500);
+		setInterval(this.dropTromino, 300);
 		//}
 		
 		this.render();
@@ -23,7 +23,7 @@ var main = {
 	inactives: [],
 	
 	createTromino: function() {
-		this.active = Math.random()<0.5? new TrominoI():new TrominoC();
+		this.active = Math.random()<0.5? new TrominoI():new TrominoI();
 	},
 	
 	dropTromino: function() {

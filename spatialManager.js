@@ -50,7 +50,7 @@ var spatialManager = {
 			for (var j = 1; j <= 6; j++) {
 				for (var k = 1; k <= 6; k++) {
 					if (this.board[j][i][k]===false) {levelCount++};
-					if (levelCount===36) {deleteLevel(i)};
+					if (levelCount===36) {this.deleteLevel(i)};
 				}
 			}
 		}
@@ -59,15 +59,24 @@ var spatialManager = {
 	//Used when a player fills up an entire level
 	deleteLevel: function (y) {
 
-		//clear all boxes from current level
-		for (i=0; i<6;i++)
+		//clear all boxes on deleted level from Spatial Board
+		for (i=1; i<6;i++)
 		{
-			for (j=0;j<6;j++)
+			for (j=1;j<6;j++)
 			{
-				this.board[y][i][j]=true;
+				this.board[i][y][j]=true;
 			}
 		}
-		//shift all higher boxes one level lower
+		//Splice all inactive boxes on deleted level from Inactives Array in Main
+		for (b=main.inactives.length-1; b>=0;b--)
+		{
+			if (main.inactives[b][1]=y)
+			{
+				main.inactives.splice(b,1);
+			}
+		}
+
+		//shift all higher boxes one level lower in the Spatial Board
 		for (m=y+1; m<=19;m++)
 		{
 			for (n=0;n<6;n++)
@@ -80,6 +89,15 @@ var spatialManager = {
 						this.board[m][n][p]=true;
 					}
 				}
+			}
+		}
+
+		//shift all higher boxes one level lower in the Inactives Array in Main
+		for (z=main.inactives.length-1; z>=0;z--)
+		{
+			if (main.inactives[z][1]>y)
+			{
+				main.inactives[z][1]--;
 			}
 		}
 		score++;
