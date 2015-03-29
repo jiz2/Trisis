@@ -5,7 +5,6 @@
 var main = {
 
 	clank: new Audio ("/audio/clank.mp3"),
-	theme: new Audio ("/audio/theme.mp3"),
 	swish1: new Audio("/audio/swish1.mp3"),
 	swish2: new Audio("/audio/swish2.mp3"),
 	swish3: new Audio("/audio/swish3.mp3"),
@@ -13,7 +12,6 @@ var main = {
 
 
 	init: function () {
-		main.theme.play();
 		spatialManager.init();
 
 		
@@ -24,7 +22,7 @@ var main = {
 		// Add active Tromino into game field
 		spatialManager.register(main.active);
 		
-		setInterval(this.dropTromino, 300);
+		setInterval(this.dropTromino, 500);
 		//}
 		
 		this.render();
