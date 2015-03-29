@@ -60,8 +60,8 @@ var spatialManager = {
 	deleteLevel: function (y) {
 		main.ding.play();
 		// Clear all boxes on deleted level from Spatial Board
-		for (var x = 1; x < 6; x++) {
-			for (var z = 1; z < 6; z++) {
+		for (var x = 1; x <= 6; x++) {
+			for (var z = 1; z <= 6; z++) {
 				this.board[x][y][z] = true;
 			}
 		}
