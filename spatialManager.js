@@ -43,8 +43,9 @@ var spatialManager = {
 	//This function called when a tromino is settled. Check to see if the level has been completely filled.
 	checkForCompletion: function (y1,y2,y3) {
 		var highest = Math.max(y1,y2,y3);
+		var lowest = Math.max(0,highest-3);
 
-		for (var i = highest; i > highest-3; i--) {
+		for (var i = highest; i > lowest; i--) {
 			var levelCount = 0;
 			for (var j = 1; j <= 6; j++) {
 				for (var k = 1; k <= 6; k++) {
