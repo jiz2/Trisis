@@ -23,7 +23,7 @@ var main = {
 	inactives: [],
 	
 	createTromino: function() {
-		this.active = Math.random()<0.5? new TrominoI():new TrominoI();
+		this.active = Math.random()<0.5? new TrominoI():new TrominoC();
 	},
 	
 	dropTromino: function() {

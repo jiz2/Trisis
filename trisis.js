@@ -23,10 +23,10 @@ window.onload = function init() {
     gl.cullFace(gl.BACK);
 	
 	gl.enable( gl.BLEND );
-//    gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA );
+    gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA );
 //    gl.blendFunc( gl.SRC_ALPHA, gl.DST_ALPHA );
 //    gl.blendFunc( gl.ONE, gl.DST_ALPHA );
-    gl.blendFunc( gl.SRC_ALPHA, gl.ONE );
+    //gl.blendFunc( gl.SRC_ALPHA, gl.ONE );
 //    gl.blendFunc( gl.ONE, gl.ONE_MINUS_SRC_ALPHA );
 	
 	// ==================

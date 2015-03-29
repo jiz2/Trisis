@@ -70,7 +70,7 @@ var spatialManager = {
 		//Splice all inactive boxes on deleted level from Inactives Array in Main
 		for (b=main.inactives.length-1; b>=0;b--)
 		{
-			if (main.inactives[b][1]=y)
+			if (main.inactives[b][1]==y)
 			{
 				main.inactives.splice(b,1);
 			}
@@ -101,8 +101,8 @@ var spatialManager = {
 			}
 		}
 		score++;
-		renderRedBoxes();
+		main.render();
 		//check for any cascading completions
-		checkForCompletion(y,y,y);
+		this.checkForCompletion(y,y,y);
 	}
 }
