@@ -55,77 +55,63 @@ var main = {
 		
 		// Add active Tromino into game field
 		spatialManager.register(main.active);
+		
+		main.render();
 	},
 
 	moveTromino: function () {
 		// Remove active Tromino from game field
 		spatialManager.unregister(main.active);
 		
+		var newA = this.active.a;
+		var newB = this.active.b;
+		var newC = this.active.c;
+
 		if (eatKey(KEY_LEFT)) {
-			var safe = true;
-			if (this.active.a[0]-1 < 1) safe = false;
-			if (this.active.b[0]-1 < 1) safe = false;
-			if (this.active.c[0]-1 < 1) safe = false;
-			
-			safe = safe && spatialManager.checkCollision(this.active.a[0]-1, this.active.a[1], this.active.a[2]);
-			safe = safe && spatialManager.checkCollision(this.active.b[0]-1, this.active.b[1], this.active.b[2]);
-			safe = safe && spatialManager.checkCollision(this.active.c[0]-1, this.active.c[1], this.active.c[2]);
-			
-			if (safe) {
-				this.active.a[0]--; 
-				this.active.b[0]--;
-				this.active.c[0]--;
-			}
+			newA = add(newA, vec3( -1, 0, 0 ));
+			newB = add(newB, vec3( -1, 0, 0 ));
+			newC = add(newC, vec3( -1, 0, 0 ));
 		}
 		if (eatKey(KEY_UP)) {
-			var safe = true;
-			if (this.active.a[2]-1 < 1) safe = false;
-			if (this.active.b[2]-1 < 1) safe = false;
-			if (this.active.c[2]-1 < 1) safe = false;
-			
-			safe = safe && spatialManager.checkCollision(this.active.a[0], this.active.a[1], this.active.a[2]-1);
-			safe = safe && spatialManager.checkCollision(this.active.b[0], this.active.b[1], this.active.b[2]-1);
-			safe = safe && spatialManager.checkCollision(this.active.c[0], this.active.c[1], this.active.c[2]-1);
-			
-			if (safe) {
-				this.active.a[2]--; 
-				this.active.b[2]--;
-				this.active.c[2]--;
-			}
+			newA = add(newA, vec3( 0, 0, -1 ));
+			newB = add(newB, vec3( 0, 0, -1 ));
+			newC = add(newC, vec3( 0, 0, -1 ));
 		}
 		if (eatKey(KEY_RIGHT)) {
-			var safe = true;
-			if (this.active.a[0]+1 > 6) safe = false;
-			if (this.active.b[0]+1 > 6) safe = false;
-			if (this.active.c[0]+1 > 6) safe = false;
-			
-			safe = safe && spatialManager.checkCollision(this.active.a[0]+1, this.active.a[1], this.active.a[2]);
-			safe = safe && spatialManager.checkCollision(this.active.b[0]+1, this.active.b[1], this.active.b[2]);
-			safe = safe && spatialManager.checkCollision(this.active.c[0]+1, this.active.c[1], this.active.c[2]);
-			
-			if (safe) {
-				this.active.a[0]++; 
-				this.active.b[0]++;
-				this.active.c[0]++;
-			}
+			newA = add(newA, vec3( 1, 0, 0 ));
+			newB = add(newB, vec3( 1, 0, 0 ));
+			newC = add(newC, vec3( 1, 0, 0 ));
 		}
 		if (eatKey(KEY_DOWN)) {
-			var safe = true;
-			if (this.active.a[2]+1 > 6) safe = false;
-			if (this.active.b[2]+1 > 6) safe = false;
-			if (this.active.c[2]+1 > 6) safe = false;
-			
-			safe = safe && spatialManager.checkCollision(this.active.a[0], this.active.a[1], this.active.a[2]+1);
-			safe = safe && spatialManager.checkCollision(this.active.b[0], this.active.b[1], this.active.b[2]+1);
-			safe = safe && spatialManager.checkCollision(this.active.c[0], this.active.c[1], this.active.c[2]+1);
-			
-			if (safe) {
-				this.active.a[2]++; 
-				this.active.b[2]++;
-				this.active.c[2]++;
-			}
+			newA = add(newA, vec3( 0, 0, 1 ));
+			newB = add(newB, vec3( 0, 0, 1 ));
+			newC = add(newC, vec3( 0, 0, 1 ));
 		}
 		
+		// If a change occurred
+		if (newA[0] !== this.active.a[0] || newA[2] !== this.active.a[2]) {
+			// Check collision
+			var safe = true;
+			
+			if (newA[0] < 1 || newA[0] > 6) safe = false;
+			if (newB[0] < 1 || newB[0] > 6) safe = false;
+			if (newC[0] < 1 || newC[0] > 6) safe = false;
+			
+			if (newA[2] < 1 || newA[2] > 6) safe = false;
+			if (newB[2] < 1 || newB[2] > 6) safe = false;
+			if (newC[2] < 1 || newC[2] > 6) safe = false;
+			
+			safe = safe && spatialManager.checkCollision(newA[0], newA[1], newA[2]);
+			safe = safe && spatialManager.checkCollision(newB[0], newB[1], newB[2]);	
+			safe = safe && spatialManager.checkCollision(newC[0], newC[1], newC[2]);	
+			
+			if (safe) {
+				this.active.a = newA;
+				this.active.b = newB;
+				this.active.c = newC;
+				this.render();
+			}
+		}
 		/* 	Code used in Mobile for positive movement at any angle
 			that needs to be changed if want to implement here
 		
@@ -205,6 +191,7 @@ var main = {
 		if (safeA && safeB) {
 			this.active.a = newA;
 			this.active.b = newB;
+			this.render();
 		}
 		
 		// Add active Tromino into game field
@@ -233,8 +220,8 @@ var main = {
 		container.render(mv, mvstack);
 		
 		// Render active Tromino
-		main.moveTromino();
-		main.rotateTromino();
+		//main.moveTromino();
+		//main.rotateTromino();
 		main.active.render(mv, mvstack);
 		
 		// Render inactive Trominos
@@ -243,6 +230,6 @@ var main = {
 		// Reset indices
 		cstackIndex = 1;
 
-		requestAnimFrame( main.render );
+		//requestAnimFrame( main.render );
 	}
 }

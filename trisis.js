@@ -78,7 +78,7 @@ window.onload = function init() {
         e.preventDefault();         // Disable drag and drop
     });
 	
-	window.addEventListener("mousedown", function(e){
+	window.addEventListener("mouseup", function(e){
 		if (e.button > 0) {
 			movement = false;
 			document.body.style.cursor = 'auto';
@@ -92,6 +92,7 @@ window.onload = function init() {
             spinX = ( spinX - (origY - e.offsetY) )%360;
             origX = e.offsetX;
             origY = e.offsetY;
+			main.render();
         }
     });
 	
@@ -107,7 +108,10 @@ window.onload = function init() {
 	// Keyboard movement control
 	// =========================
 	window.addEventListener("keydown", function(e){
+		e.preventDefault();
 		g_keys[e.keyCode] = true;
+		main.moveTromino();
+		main.rotateTromino();
     });
 	
 	window.addEventListener("keyup", function(e){
