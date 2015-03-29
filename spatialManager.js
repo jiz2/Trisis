@@ -49,8 +49,8 @@ var spatialManager = {
 			var levelCount = 0;
 			for (var j = 1; j <= 6; j++) {
 				for (var k = 1; k <= 6; k++) {
-					if (this.board[j][i][k] === false) {levelCount++};
-					if (levelCount === 36) {this.deleteLevel(i)};
+					if (this.board[j][i][k] === false) levelCount++;
+					if (levelCount === 36) this.deleteLevel(i);
 				}
 			}
 		}
@@ -76,8 +76,7 @@ var spatialManager = {
 		for (var i = y + 1; i <= 19; i++) {
 			for (var x = 1; x < 6; x++) {
 				for (var z = 1; z < 6; z++) {
-					if (this.board[x][i][z] === false)
-					{
+					if (this.board[x][i][z] === false) {
 						this.board[x][i-1][z] = false;
 						this.board[x][i][z] = true;
 					}
