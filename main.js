@@ -3,9 +3,19 @@
 // ========
 
 var main = {
-	
+
+	clank: new Audio ("/audio/clank.mp3"),
+	theme: new Audio ("/audio/theme.mp3"),
+	swish1: new Audio("/audio/swish1.mp3"),
+	swish2: new Audio("/audio/swish2.mp3"),
+	swish3: new Audio("/audio/swish3.mp3"),
+	ding: new Audio("/audio/ding.mp3"),
+
+
 	init: function () {
+		main.theme.play();
 		spatialManager.init();
+
 		
 		//if (maxHeight<20)
 		//{
@@ -35,6 +45,8 @@ var main = {
 			main.active.b[1]--;
 			main.active.c[1]--;
 		} else {
+
+			main.clank.play();
 			// Add inactive Tromino
 			main.inactives.push(main.active.a);
 			main.inactives.push(main.active.b);
@@ -160,26 +172,32 @@ var main = {
 		var relPosB = subtract(this.active.b, this.active.c);
 		
 		if (eatKey("A".charCodeAt(0))) { // x-axis, positive
+			main.swish1.play();
 			relPosA = rotateBy(relPosA, 90, [1,0,0]);
 			relPosB = rotateBy(relPosB, 90, [1,0,0]);
 		}
 		if (eatKey("Z".charCodeAt(0))) { // x-axis, negative
+			main.swish1.play();
 			relPosA = rotateBy(relPosA, -90, [1,0,0]);
 			relPosB = rotateBy(relPosB, -90, [1,0,0]);
 		}
 		if (eatKey("S".charCodeAt(0))) { // y-axis, positive
+			main.swish2.play();
 			relPosA = rotateBy(relPosA, 90, [0,1,0]);
 			relPosB = rotateBy(relPosB, 90, [0,1,0]);
 		}
 		if (eatKey("X".charCodeAt(0))) { // y-axis, negative
+			main.swish2.play();
 			relPosA = rotateBy(relPosA, -90, [0,1,0]);
 			relPosB = rotateBy(relPosB, -90, [0,1,0]);
 		}
 		if (eatKey("D".charCodeAt(0))) { // z-axis, positive
+			main.swish3.play();
 			relPosA = rotateBy(relPosA, 90, [0,0,1]);
 			relPosB = rotateBy(relPosB, 90, [0,0,1]);
 		}
 		if (eatKey("C".charCodeAt(0))) { // z-axis, negative 
+			main.swish3.play();
 			relPosA = rotateBy(relPosA, -90, [0,0,1]);
 			relPosB = rotateBy(relPosB, -90, [0,0,1]);
 		}

@@ -1,0 +1,9 @@
+body {
+	background-image: -webkit-linear-gradient(#0000FF,#00FFFF);
+}
+
+#gl-canvas{
+	border-style: groove;
+	border-width:20px;
+	border-color: fuchsia;
+}

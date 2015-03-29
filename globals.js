@@ -34,3 +34,4 @@ var score=0;
 
 var maxHeight=0;
 
+

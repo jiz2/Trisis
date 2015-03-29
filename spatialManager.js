@@ -49,8 +49,14 @@ var spatialManager = {
 			var levelCount = 0;
 			for (var j = 1; j <= 6; j++) {
 				for (var k = 1; k <= 6; k++) {
-					if (this.board[j][i][k] === false) levelCount++;
-					if (levelCount === 36) this.deleteLevel(i);
+
+					if (this.board[j][i][k]===false) {levelCount++};
+					if (levelCount===36) 
+						{
+							main.ding.play();
+							this.deleteLevel(i);
+							
+						};
 				}
 			}
 		}
