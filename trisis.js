@@ -32,7 +32,6 @@ window.onload = function init() {
 	// ==================
 	// Initialize objects
 	// ==================
-	colorCube.init();
 	texCube.init();
 	container.init();
 	signaller.init();

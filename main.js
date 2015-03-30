@@ -19,7 +19,7 @@ var main = {
 		// Add active Tromino into game field
 		spatialManager.register(main.active);
 		
-		setInterval(this.dropTromino, 500);
+		this.dropInterval = setInterval(this.dropTromino, 500);
 		
 		this.render();
 	},
@@ -56,8 +56,12 @@ var main = {
 			spatialManager.checkForCompletion(main.active.a[1],main.active.b[1],main.active.c[1]);
 			
 			// Make new Tromino
-			if(maxHeight<20){
-			main.createTromino();}
+			if (maxHeight < 20)
+				main.createTromino();
+			else {
+				clearInterval(main.dropInterval);
+				alert("<['>.<']> GAME OVER! d(TT.TT)b YOU LOST! q{'X.X'}p");
+			}
 		}
 		
 		// Add active Tromino into game field
