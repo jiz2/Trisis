@@ -40,6 +40,9 @@ var main = {
 			main.active.c[1]--;
 		} else {
 			main.clank.play();
+
+			maxHeight = Math.max(maxHeight,main.active.a[1], main.active.b[1], main.active.c[1]);
+			console.log(maxHeight);
 			
 			// Add inactive Tromino
 			main.inactives.push(main.active.a);
@@ -53,7 +56,8 @@ var main = {
 			spatialManager.checkForCompletion(main.active.a[1],main.active.b[1],main.active.c[1]);
 			
 			// Make new Tromino
-			main.createTromino();
+			if(maxHeight<20){
+			main.createTromino();}
 		}
 		
 		// Add active Tromino into game field
