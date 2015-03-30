@@ -48,6 +48,7 @@ var texCube = {
 		// texture image
 		this.image = document.getElementById("texWhite");
 		this.imageRed = document.getElementById("texRed");
+		this.imageGray = document.getElementById("texGray");
 	},
 
 	square: function (a, b, c, d) {
