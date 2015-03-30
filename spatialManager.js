@@ -42,6 +42,7 @@ var spatialManager = {
 	},
 	//This function called when a tromino is settled. Check to see if the level has been completely filled.
 	checkForCompletion: function (y1,y2,y3) {
+		
 		var highest = Math.max(y1,y2,y3);
 		var lowest = Math.max(0,highest-3);
 
@@ -50,7 +51,10 @@ var spatialManager = {
 			for (var x = 1; x <= 6; x++) {
 				for (var z = 1; z <= 6; z++) {
 					if (this.board[x][y][z] === false) levelCount++;
-					if (levelCount === 36) this.deleteLevel(y);
+					if (levelCount === 36) 
+						{
+							this.deleteLevel(y);
+						}
 				}
 			}
 		}
@@ -59,12 +63,7 @@ var spatialManager = {
 	//Used when a player fills up an entire level
 	deleteLevel: function (y) {
 		main.ding.play();
-		// Clear all boxes on deleted level from Spatial Board
-		for (var x = 1; x <= 6; x++) {
-			for (var z = 1; z <= 6; z++) {
-				this.board[x][y][z] = true;
-			}
-		}
+		
 		// Remove all inactive boxes on deleted level from Inactives Array in Main
 		for (var i = main.inactives.length-1; i >= 0; i--) {
 			if (main.inactives[i][1] == y) {
@@ -73,13 +72,14 @@ var spatialManager = {
 		}
 
 		// Shift all higher boxes one level lower in the Spatial Board
-		for (var i = y + 1; i <= 19; i++) {
-			for (var x = 1; x < 6; x++) {
-				for (var z = 1; z < 6; z++) {
-					if (this.board[x][i][z] === false) {
+		for (var i = y; i <= 19; i++) {
+			for (var x = 1; x <= 6; x++) {
+				for (var z = 1; z <= 6; z++) {
+					this.board[x][i][z]=this.board[x][i+1][z];
+					/*if (this.board[x][i][z] === false) {
 						this.board[x][i-1][z] = false;
 						this.board[x][i][z] = true;
-					}
+					}*/
 				}
 			}
 		}
