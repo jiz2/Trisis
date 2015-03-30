@@ -51,10 +51,7 @@ var spatialManager = {
 			for (var x = 1; x <= 6; x++) {
 				for (var z = 1; z <= 6; z++) {
 					if (this.board[x][y][z] === false) levelCount++;
-					if (levelCount === 36) 
-						{
-							this.deleteLevel(y);
-						}
+					if (levelCount === 36) this.deleteLevel(y);
 				}
 			}
 		}
@@ -75,11 +72,7 @@ var spatialManager = {
 		for (var i = y; i <= 19; i++) {
 			for (var x = 1; x <= 6; x++) {
 				for (var z = 1; z <= 6; z++) {
-					this.board[x][i][z]=this.board[x][i+1][z];
-					/*if (this.board[x][i][z] === false) {
-						this.board[x][i-1][z] = false;
-						this.board[x][i][z] = true;
-					}*/
+					this.board[x][i][z] = this.board[x][i+1][z];
 				}
 			}
 		}
