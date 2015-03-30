@@ -6,6 +6,7 @@ body {
 	border-style: groove;
 	border-width:20px;
 	border-color: fuchsia;
+	border-radius: 20px 20px 20px 20px;
 }
 
 #control li{
