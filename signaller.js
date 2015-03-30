@@ -68,39 +68,48 @@ var signaller = {
 		gl.vertexAttribPointer( vTexCoord, 2, gl.FLOAT, false, 0, 0 );
 		
 		configureTexture(this.image);
-		gl.uniform1i( gl.getUniformLocation( program, "isTexture"), 1 );
 		
 		// z negative
+		var zn = z-1;
+		while (zn > 0 && spatialManager.checkCollision(x,y,zn)) zn--;
 		mvstack.push(mv);
-		mv = mult( mv, translate( x, y, 1.001 ) );
+		mv = mult( mv, translate( x, y, zn+1.001 ) );
 		gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
 		gl.drawArrays( gl.TRIANGLES, 0, 6 );
 		mv = mvstack.pop();
 		
 		// z positive
+		var zp = z+1;
+		while (zp < 7 && spatialManager.checkCollision(x,y,zp)) zp++;
 		mvstack.push(mv);
-		mv = mult( mv, translate( x, y, 5.999 ) );
+		mv = mult( mv, translate( x, y, zp-1.001 ) );
 		gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
 		gl.drawArrays( gl.TRIANGLES, 6, 6 );
 		mv = mvstack.pop();
 		
 		// x negative
+		var xn = x-1;
+		while (xn > 0 && spatialManager.checkCollision(xn,y,z)) xn--;
 		mvstack.push(mv);
-		mv = mult( mv, translate( 1.001, y, z ) );
+		mv = mult( mv, translate( xn+1.001, y, z ) );
 		gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
 		gl.drawArrays( gl.TRIANGLES, 12, 6 );
 		mv = mvstack.pop();
 		
 		// x positive
+		var xp = x+1;
+		while (xp < 7 && spatialManager.checkCollision(xp,y,z)) xp++;
 		mvstack.push(mv);
-		mv = mult( mv, translate( 5.999, y, z ) );
+		mv = mult( mv, translate( xp-1.001, y, z ) );
 		gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
 		gl.drawArrays( gl.TRIANGLES, 18, 6 );
 		mv = mvstack.pop();
 		
 		// y negative
+		var yn = y-1;
+		while (yn > 0 && spatialManager.checkCollision(x,yn,z)) yn--;
 		mvstack.push(mv);
-		mv = mult( mv, translate( x, 1.001, z ) );
+		mv = mult( mv, translate( x, yn+1.001, z ) );
 		gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
 		gl.drawArrays( gl.TRIANGLES, 24, 6 );
 		mv = mvstack.pop();

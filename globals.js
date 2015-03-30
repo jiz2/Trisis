@@ -26,12 +26,7 @@ var KEY_UP = 38;
 var KEY_RIGHT = 39;
 var KEY_DOWN = 40;
 
-var cstack = [];
-
-var cstackIndex = 1;
-
-var score=0;
-
-var maxHeight=0;
+var score = 0;
+var maxHeight = 0;
 
 

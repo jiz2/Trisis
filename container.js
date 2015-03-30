@@ -84,7 +84,6 @@ var container = {
 		mv = mult( mv, translate( 3.5, 10.5, 3.5 ) );
 		mv = mult( mv, scale4( 3.0, 10.0, 3.0 ) );
 		gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
-		gl.uniform1i( gl.getUniformLocation( program, "isTexture"), 1 );
 		
 		// z wall
 		configureTexture(this.imageBlue);

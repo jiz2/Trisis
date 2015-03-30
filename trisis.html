@@ -4,10 +4,8 @@
 <script id="vertex-shader" type="x-shader/x-vertex">
 
 attribute  vec4 vPosition;
-attribute  vec4 vColor;
 attribute  vec2 vTexCoord;
 
-varying vec4 fColor;
 varying vec2 fTexCoord;
 
 uniform mat4 projection;
@@ -16,8 +14,6 @@ uniform mat4 modelview;
 void main() 
 {
 	fTexCoord = vTexCoord;
-	fColor = vColor;
-	
     gl_Position = projection * modelview * vPosition;
 } 
 </script>
@@ -26,17 +22,14 @@ void main()
 
 precision mediump float;
    
-varying vec4 fColor;
 varying vec2 fTexCoord;
 
-uniform bool isTexture;
 uniform sampler2D texture;
 
 void
 main()
 {
-    if (isTexture) gl_FragColor = texture2D( texture, fTexCoord );
-	else gl_FragColor = fColor;
+    gl_FragColor = texture2D( texture, fTexCoord );
 }
 </script>
 
@@ -63,7 +56,7 @@ main()
 
 <body>
 <audio loop autoplay>
-  <source src="./audio/theme.mp3" type="audio/mpeg">
+  <source src="./Audio/theme.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 <p><font color="white">Computer Graphics Project 3, Spring 2015<br/>

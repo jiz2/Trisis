@@ -68,57 +68,6 @@ function configureTexture( image ) {
     gl.uniform1i(gl.getUniformLocation(program, "texture"), 0);
 }
 
-//---------------------------------------------------------------------------
-// Load and draw for Color Objects
-
-// Usage: loadObject(vertexObject)
-// Pre:   vertexObject is an object that has its own vertex buffer
-// Post:  loads vertexObject into vPosition
-function loadObject(vertexObject) {
-	if (vertexObject.vBuffer) {
-		gl.bindBuffer( gl.ARRAY_BUFFER, vertexObject.vBuffer );
-		gl.vertexAttribPointer( vPosition, 4, gl.FLOAT, false, 0, 0 );
-	} else throw "trying to load non-existing object";
-}
-
-// Usage: loadColor(colorObject, newColor)
-// Pre:   colorObject is an object that has its own color buffer,
-//        newColor is the new color to use on the colorObject
-// Post:  if newColor exists then loads newColor into vColor
-//        else color of colorObject is loaded into vColor
-function loadColor(colorObject, newColor) {
-	if (!newColor) {
-		gl.bindBuffer( gl.ARRAY_BUFFER, colorObject.cBuffer );
-	} else if ("red".localeCompare(newColor) === 0) {
-		gl.bindBuffer( gl.ARRAY_BUFFER, cstack[0] );
-	} else if (cstack[cstackIndex]) {
-		gl.bindBuffer( gl.ARRAY_BUFFER, cstack[cstackIndex] );
-	} else {
-		var newColorBuffer = gl.createBuffer();
-		var colors = [];
-		for (var i in colorObject.points)
-			colors.push(newColor);
-		gl.bindBuffer( gl.ARRAY_BUFFER, newColorBuffer );
-		gl.bufferData( gl.ARRAY_BUFFER, flatten(colors), gl.STATIC_DRAW );
-		cstack[cstackIndex] = newColorBuffer;
-	}
-	cstackIndex++;
-	gl.vertexAttribPointer( vColor, 4, gl.FLOAT, false, 0, 0 );
-}
-
-// Usage: drawObject(vertexObject, mv)
-// Pre:   vertexObject is an object that has its own vertex buffer
-//        mv is the modelview matrix
-// Post:  loads vertexObject into vPosition and draws it
-function drawObject(vertexObject, mv) {
-	gl.enableVertexAttribArray( vColor );
-	gl.uniform1i( gl.getUniformLocation( program, "isTexture"), 0 );
-	loadObject(vertexObject);
-	gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
-	gl.drawArrays( gl.TRIANGLES, 0, vertexObject.numVertices);
-	gl.disableVertexAttribArray( vColor );
-}
-
 //----------------------------------------------------------------------------
 // Load and draw for Texture Objects
 
@@ -137,13 +86,13 @@ function loadTexObject(texObject) {
 	} else throw "trying to load non-texture object";
 }
 
-// Usage: drawTexObject(texObject, mv)
+// Usage: drawTexObject(texObject, mv, active)
 // Pre:   texObject is an object that has its own vertex and texture buffer
 //        mv is the modelview matrix
+//        inactive defined the activity of the object [optional]
 // Post:  loads texObject and its texture and draws it
 function drawTexObject(texObject, mv, inactive) {
 	gl.enableVertexAttribArray( vTexCoord );
-	gl.uniform1i( gl.getUniformLocation( program, "isTexture"), 1 );
 	loadTexObject(texObject);
 	if (inactive) configureTexture(texObject.imageRed);
 	else configureTexture(texObject.image);
