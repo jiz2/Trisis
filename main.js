@@ -55,10 +55,12 @@ var main = {
 			spatialManager.checkForCompletion(main.active.a[1],main.active.b[1],main.active.c[1]);
 			
 			// Make new Tromino
-			if (maxHeight < 20)
+			if (maxHeight < 19)
 				main.createTromino();
 			else {
+				main.gameOver = true;
 				clearInterval(main.dropInterval);
+				main.render();
 				alert("<['>.<']> GAME OVER! d(TT.TT)b YOU LOST! q{'X.X'}p");
 			}
 		}
@@ -75,22 +77,23 @@ var main = {
 		
 		var x = 0;
 		var z = 0;
+		var angle = Math.round(-spinY/90)*Math.PI/2;
 
 		if (eatKey(KEY_LEFT)) {
-			x = -Math.round(Math.cos(Math.round(-spinY/90)*Math.PI/2));
-			z =  Math.round(Math.sin(Math.round(-spinY/90)*Math.PI/2));
+			x = -Math.round(Math.cos(angle));
+			z =  Math.round(Math.sin(angle));
 		}
 		if (eatKey(KEY_UP)) {
-			x = -Math.round(Math.sin(Math.round(-spinY/90)*Math.PI/2));
-			z = -Math.round(Math.cos(Math.round(-spinY/90)*Math.PI/2));
+			x = -Math.round(Math.sin(angle));
+			z = -Math.round(Math.cos(angle));
 		}
 		if (eatKey(KEY_RIGHT)) {
-			x =  Math.round(Math.cos(Math.round(-spinY/90)*Math.PI/2));
-			z = -Math.round(Math.sin(Math.round(-spinY/90)*Math.PI/2));
+			x =  Math.round(Math.cos(angle));
+			z = -Math.round(Math.sin(angle));
 		}
 		if (eatKey(KEY_DOWN)) {
-			x = Math.round(Math.sin(Math.round(-spinY/90)*Math.PI/2));
-			z = Math.round(Math.cos(Math.round(-spinY/90)*Math.PI/2));
+			x =  Math.round(Math.sin(angle));
+			z =  Math.round(Math.cos(angle));
 		}
 		
 		// If a change occurred
@@ -209,7 +212,8 @@ var main = {
 			var pos = this.inactives[i];
 			mvstack.push(mv);
 			mv = mult( mv, translate( pos[0], pos[1], pos[2] ) );
-			drawTexObject(texCube, mv, true);
+			if (this.gameOver) drawTexObject(texCube, mv, "gray");
+			else drawTexObject(texCube, mv, "red");
 			mv = mvstack.pop();
 		}
 	},
@@ -226,16 +230,11 @@ var main = {
 		container.render(mv, mvstack);
 		
 		// Render active Tromino
-		//main.moveTromino();
-		//main.rotateTromino();
 		main.active.render(mv, mvstack);
 		
 		// Render inactive Trominos
 		main.renderInactives(mv, mvstack);
 		
-		// Reset indices
-		cstackIndex = 1;
-
 		//requestAnimFrame( main.render );
 	}
 }

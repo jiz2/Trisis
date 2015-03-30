@@ -16,14 +16,14 @@ function eatKey(keyCode) {
 //        axis is the rotation axis
 // Post:  rotates relativePos degAngle degrees by axis
 function rotateBy(relativePos, degAngle, axis) {
-	var matPos = mat4(
-		relativePos[0], 0, 0, 0,
-		relativePos[1], 0, 0, 0,
-		relativePos[2], 0, 0, 0,
-		0, 0, 0, 1
-	);
-	var rotMat = mult( rotate( degAngle, axis ), matPos );
-	return vec3( rotMat[0][0], rotMat[1][0], rotMat[2][0] );
+	var rotMat = rotate( degAngle, axis );
+	var x = relativePos[0];
+	var y = relativePos[1];
+	var z = relativePos[2];
+	var newX = rotMat[0][0] * x + rotMat[0][1] * y + rotMat[0][2] * z;
+	var newY = rotMat[1][0] * x + rotMat[1][1] * y + rotMat[1][2] * z;
+	var newZ = rotMat[2][0] * x + rotMat[2][1] * y + rotMat[2][2] * z;
+	return vec3( newX, newY, newZ );
 }
 
 //----------------------------------------------------------------------------
@@ -86,15 +86,16 @@ function loadTexObject(texObject) {
 	} else throw "trying to load non-texture object";
 }
 
-// Usage: drawTexObject(texObject, mv, active)
+// Usage: drawTexObject(texObject, mv, color)
 // Pre:   texObject is an object that has its own vertex and texture buffer
 //        mv is the modelview matrix
-//        inactive defined the activity of the object [optional]
+//        color defined the color of the object [optional]
 // Post:  loads texObject and its texture and draws it
-function drawTexObject(texObject, mv, inactive) {
+function drawTexObject(texObject, mv, color) {
 	gl.enableVertexAttribArray( vTexCoord );
 	loadTexObject(texObject);
-	if (inactive) configureTexture(texObject.imageRed);
+	if ("red".localeCompare(color) === 0) configureTexture(texObject.imageRed);
+	else if ("gray".localeCompare(color) === 0) configureTexture(texObject.imageGray);
 	else configureTexture(texObject.image);
 	gl.uniformMatrix4fv(mvLoc, false, flatten(mv));
 	gl.drawArrays( gl.TRIANGLES, 0, texObject.numVertices);

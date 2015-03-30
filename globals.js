@@ -28,5 +28,3 @@ var KEY_DOWN = 40;
 
 var score = 0;
 var maxHeight = 0;
-
-
