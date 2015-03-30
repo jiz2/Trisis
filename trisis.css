@@ -7,3 +7,28 @@ body {
 	border-width:20px;
 	border-color: fuchsia;
 }
+
+#control li{
+	color: white;
+	display: inline;
+	background-color: black;
+	border-style: solid;
+	border-color: fuchsia;
+	border-width:2px;
+	color: white;
+	padding: 10px 5px;
+	text-decoration: none;
+	border-radius: 6px 6px 6px 6px;
+}
+
+#scoreboard {
+	background-color: black;
+	border-style: solid;
+	border-color: fuchsia;
+	border-width:2px;
+	width: 100px;
+	color: white;
+	padding: 10px 5px;
+	text-decoration: none;
+	border-radius: 6px 6px 6px 6px;
+}

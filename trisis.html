@@ -58,6 +58,7 @@ main()
 <head>
 	<title>Trisis</title>
 	<link rel="stylesheet" type="text/css"  href="trisis.css" >
+	
 </head>
 
 <body>
@@ -68,10 +69,18 @@ main()
 <p><b><font color="white"><font size="5">Trisis</font></b> - Computer Graphics Project 3, Spring 2015<br/>
 <i>By Jianfei Zheng and Troy Porter</i></span></p>
 <center>
-<p><font size="8"><b><font color="white"><font size="5">Score: <var id="score"></font></p>
+<p id="scoreboard"><font size="8"><b><font color="white"><font size="5">Score: <var id="score"></font></p>
+
 <canvas id="gl-canvas" width="600"" height="600">
 Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
+<ul id="control"><font size= "2">
+	<li> A or Z: Rotate X-axis</li>
+	<li> S or X: Rotate Y-axis</li>
+	<li> D or C: Rotate Z-axis</li>
+	<li> SpaceBar: FreeFall</li>
+	<li> Mouse: Change POV</li>
+</ul>
 </center>
 <img id = "texWhite" src = "./Textures/white.png" hidden></img>
 <img id = "texYellow" src = "./Textures/yellow.png" hidden></img>
