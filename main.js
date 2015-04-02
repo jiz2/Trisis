@@ -4,11 +4,11 @@
 
 var main = {
 
-	clank: new Audio ("/Audio/clank.mp3"),
-	swish1: new Audio("/Audio/swish1.mp3"),
-	swish2: new Audio("/Audio/swish2.mp3"),
-	swish3: new Audio("/Audio/swish3.mp3"),
-	ding: new Audio("/Audio/ding.mp3"),
+	clank: new Audio ("./Audio/clank.mp3"),
+	swish1: new Audio("./Audio/swish1.mp3"),
+	swish2: new Audio("./Audio/swish2.mp3"),
+	swish3: new Audio("./Audio/swish3.mp3"),
+	ding: new Audio("./Audio/ding.mp3"),
 
 
 	init: function () {
